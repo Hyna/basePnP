@@ -11,6 +11,14 @@ import qimage2ndarray as i2a
 
 import transform as tr
 
+
+
+from lib import core as libCore
+from lib import machine as libMachine
+
+
+from tabs.motion import *
+
 class StartQT4(QtGui.QMainWindow):
 	def __init__(self, *args):
 		super(StartQT4, self).__init__(*args)
@@ -23,6 +31,15 @@ class StartQT4(QtGui.QMainWindow):
 		self.imgCCD.mousePressEvent = self.doSomething
 		self.align = False
 		self.alignState = ''
+
+
+ 		# core initialization - basic functions and setup
+		self.core = libCore.Core()
+		pprint.pprint(self.core.getVersion())
+
+		# load machine module - connection to the machine will be done later
+		self.machine = libMachine.Machine()
+
 
 
 
@@ -81,12 +98,48 @@ class StartQT4(QtGui.QMainWindow):
 				pprint.pprint('Fiducial p1 is aligned')
 				self.lblP1.setText('X:'+str(self.p1[0])+' Y:'+str(self.p1[1]))
 
+	@QtCore.pyqtSlot()
+	def on_btnCenter_clicked(self):
+		self.btnCenter.setText(str(self.core.boardOffset[0]) )
+		gcode = 'G0 X'+str(self.core.boardOffset[0]) + ' Y'+ str(self.core.boardOffset[1])+ ' F15000' 
+		self.machine.addToQueue('G91')
+		self.machine.addToQueue(gcode)
+		self.machine.addToQueue('G90')
+		self.machine.dumpQueue()
+		self.machine.run()
+
+	@QtCore.pyqtSlot()
+	def on_btnHome_clicked(self):
+
+		self.machine.addToQueue('G28')
+		self.machine.dumpQueue()
+		self.machine.run()
+
 
 	#mega decorators :)
 	@QtCore.pyqtSlot()
 	def on_imgCCD_mousePressEvent(self):
 		pprint.pprint('EZFGFSG')
 
+
+	@QtCore.pyqtSlot()
+	def on_btnConnect_clicked(self):
+		if self.machine.isConnected() is True:
+			pass
+			self.machine.disconnect()
+			self.lblMachineStatus.setText('Machine was disconnected')
+			self.btnConnect.setText('Connect')
+		else:
+			port = self.txtPort.text()	
+			if self.machine.connect('/dev/ttyACM0'):
+				self.lblMachineStatus.setText('Machine was connected')
+				self.btnConnect.setText('Disconnect')
+
+			else:
+				self.lblMachineStatus.setText('Unable to connect!')
+			#pprint.pprint(self.txtPort.text())
+			#self.btnConnect.setText('Connect')
+		
 
 	@QtCore.pyqtSlot()
 	def on_btnAlign_clicked(self):
@@ -206,7 +259,7 @@ class StartQT4(QtGui.QMainWindow):
 		#self.filename = fd.getOpenFileName()
 
 		#for debug purposes only
-		self.filename = '/home/hyna/Diplomka/sw/Qt/test/base3D.mnt'
+		self.filename = 'base3D.mnt'
 			
 		from os.path import isfile
 		if isfile(self.filename):
