@@ -17,7 +17,7 @@ class Core:
 		# TODO Load these values from file
 		self.topPixelPermm = 30.5 # top camer pixel per mm
 		self.bottomPixelPermm = 666 #bottom camera pixel per mm
-		self.boardOffset = [40,50] # X,Y position where 0,0 of board is. Board workplace
+		self.boardOffset = [6,245] # X,Y position where 0,0 of board is. Board workplace
 		
 
 	def toPix(self, mm, camera):

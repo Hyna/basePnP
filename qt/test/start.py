@@ -11,11 +11,11 @@ import qimage2ndarray as i2a
 
 import transform as tr
 
-
+import time
 
 from lib import core as libCore
 from lib import machine as libMachine
-
+from lib import board as libBoard
 
 from tabs.motion import *
 
@@ -23,7 +23,7 @@ class StartQT4(QtGui.QMainWindow):
 	def __init__(self, *args):
 		super(StartQT4, self).__init__(*args)
 		
-		uic.loadUi('mainwindow.ui', self)
+		a = uic.loadUi('mainwindow.ui', self)
 		#all code must be inserted after self.ui.setupUi(self)
 
 		
@@ -40,7 +40,24 @@ class StartQT4(QtGui.QMainWindow):
 		# load machine module - connection to the machine will be done later
 		self.machine = libMachine.Machine()
 
+		# board alignment and coordinates transformation
+		pprint.pprint(self)
+		#ui =  Ui_MainWindow()
+		self.board = libBoard.Board(a)
 
+		self.treeWidget.itemDoubleClicked.connect(self.what)
+
+	@QtCore.pyqtSlot(QtGui.QTreeWidgetItem)
+	def what(self, item):
+		pprint.pprint('yeah'+str(item))
+		pprint.pprint(item.text(4))
+		pprint.pprint(item.text(5))
+		xy = [float(item.text(4)),float(item.text(5))]
+		transform = self.board.transform(xy)
+		self.machine.addToQueue('G0 X'+str(transform[0])+' Y'+str(transform[1])+ ' F 8000')
+		self.machine.run()
+		time.sleep(0.3)
+		self.on_btnLoadCCD_clicked()
 
 
 	def doSomething(self, event):
@@ -98,11 +115,41 @@ class StartQT4(QtGui.QMainWindow):
 				pprint.pprint('Fiducial p1 is aligned')
 				self.lblP1.setText('X:'+str(self.p1[0])+' Y:'+str(self.p1[1]))
 
+
+
+
+
+	@QtCore.pyqtSlot()
+	def on_btnBoardM1_clicked(self):
+		pos = self.machine.currentPos()
+		pprint.pprint(pos)
+
+		self.board.setBoardOffset(pos)
+		self.board.mode1()
+
+		
+
+
+		'''
+		#self.btnCenter.setText(str(self.core.boardOffset[0]) )
+		gcode = 'G0 X'+str(self.core.boardOffset[0]) + ' Y'+ str(self.core.boardOffset[1])+ ' F4000' 
+		#self.machine.addToQueue('G91')
+		self.machine.addToQueue(gcode)
+		self.machine.addToQueue('G90')
+		self.machine.dumpQueue()
+		self.machine.run()
+		'''
+	@QtCore.pyqtSlot()
+	def on_btnClearAlignment_clicked(self):
+		self.board.clear()
+
+
+
 	@QtCore.pyqtSlot()
 	def on_btnCenter_clicked(self):
-		self.btnCenter.setText(str(self.core.boardOffset[0]) )
-		gcode = 'G0 X'+str(self.core.boardOffset[0]) + ' Y'+ str(self.core.boardOffset[1])+ ' F15000' 
-		self.machine.addToQueue('G91')
+		#self.btnCenter.setText(str(self.core.boardOffset[0]) )
+		gcode = 'G0 X'+str(self.core.boardOffset[0]) + ' Y'+ str(self.core.boardOffset[1])+ ' F4000' 
+		#self.machine.addToQueue('G91')
 		self.machine.addToQueue(gcode)
 		self.machine.addToQueue('G90')
 		self.machine.dumpQueue()
@@ -110,11 +157,81 @@ class StartQT4(QtGui.QMainWindow):
 
 	@QtCore.pyqtSlot()
 	def on_btnHome_clicked(self):
-
 		self.machine.addToQueue('G28')
 		self.machine.dumpQueue()
 		self.machine.run()
 
+	@QtCore.pyqtSlot()
+	def on_btnMoveXn_clicked(self):
+		gcode = 'G0 X-1 F2000' 
+		self.machine.addToQueue('G91')
+		self.machine.addToQueue(gcode)
+		self.machine.addToQueue('G90')
+		self.machine.dumpQueue()
+		self.machine.run()
+
+	@QtCore.pyqtSlot()
+	def on_btnMoveXn2_clicked(self):
+		gcode = 'G0 X-10 F2000' 
+		self.machine.addToQueue('G91')
+		self.machine.addToQueue(gcode)
+		self.machine.addToQueue('G90')
+		self.machine.dumpQueue()
+		self.machine.run()
+
+	@QtCore.pyqtSlot()
+	def on_btnMoveXp_clicked(self):
+		gcode = 'G0 X1 F2000' 
+		self.machine.addToQueue('G91')
+		self.machine.addToQueue(gcode)
+		self.machine.addToQueue('G90')
+		self.machine.dumpQueue()
+		self.machine.run()
+
+	@QtCore.pyqtSlot()
+	def on_btnMoveXp2_clicked(self):
+		gcode = 'G0 X10 F2000' 
+		self.machine.addToQueue('G91')
+		self.machine.addToQueue(gcode)
+		self.machine.addToQueue('G90')
+		self.machine.dumpQueue()
+		self.machine.run()
+
+	@QtCore.pyqtSlot()
+	def on_btnMoveYn_clicked(self):
+		gcode = 'G0 Y-1 F2000' 
+		self.machine.addToQueue('G91')
+		self.machine.addToQueue(gcode)
+		self.machine.addToQueue('G90')
+		self.machine.dumpQueue()
+		self.machine.run()
+
+	@QtCore.pyqtSlot()
+	def on_btnMoveYn2_clicked(self):
+		gcode = 'G0 Y-10 F2000' 
+		self.machine.addToQueue('G91')
+		self.machine.addToQueue(gcode)
+		self.machine.addToQueue('G90')
+		self.machine.dumpQueue()
+		self.machine.run()
+
+	@QtCore.pyqtSlot()
+	def on_btnMoveYp_clicked(self):
+		gcode = 'G0 Y1 F2000' 
+		self.machine.addToQueue('G91')
+		self.machine.addToQueue(gcode)
+		self.machine.addToQueue('G90')
+		self.machine.dumpQueue()
+		self.machine.run()
+
+	@QtCore.pyqtSlot()
+	def on_btnMoveYp2_clicked(self):
+		gcode = 'G0 Y10 F2000' 
+		self.machine.addToQueue('G91')
+		self.machine.addToQueue(gcode)
+		self.machine.addToQueue('G90')
+		self.machine.dumpQueue()
+		self.machine.run()
 
 	#mega decorators :)
 	@QtCore.pyqtSlot()
@@ -251,6 +368,7 @@ class StartQT4(QtGui.QMainWindow):
 		pixmap = QtGui.QPixmap.fromImage(image4)
 		label.setPixmap(pixmap)
 		
+
 
 	@QtCore.pyqtSlot()
 	def on_btnLoadPlacement_clicked(self):

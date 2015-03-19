@@ -15,7 +15,7 @@ class Machine:
 	def connect(self, port):
 		self.port = port
 		try:
-			self.serial = serial.Serial(self.port, 115200, timeout=1)
+			self.serial = serial.Serial(self.port, 115200, timeout=0)
 		#if self.serial:
 			time.sleep(2)
 			self.serial.flushInput()
@@ -61,6 +61,33 @@ class Machine:
 		pp.pprint(line.strip())
 		return line
 
+	def currentPos(self):
+		self.write("M114")
+		#pos = self.read()
+		while True:
+			pos = self.read()
+			if pos.startswith('ok') is False:
+				pass
+
+			else:
+				break
+		
+		#pp.pprint(pos)
+
+		xstart = pos.find('X');
+		xend = pos.find(' ', xstart)
+
+		ystart = pos.find('Y');
+		yend = pos.find(' ', ystart)
+
+		x = float(pos[xstart+2:xend])
+		y = float(pos[ystart+2:yend])
+		posXY = [x, y]
+		#pp.pprint(posXY)
+		#pp.pprint(xend)
+		#pp.pprint(pos[xstart+2:xend])
+
+		return posXY
 
 
 	def addToQueue(self, gcode):
