@@ -58,10 +58,18 @@ class Machine:
 	def read(self):
 		line = self.serial.readline()
 		line = line.strip()
-		pp.pprint(line.strip())
+		#pp.pprint(line.strip())
 		return line
 
 	def currentPos(self):
+
+		self.serial.flushInput()
+		# hack TODO fix me. Sometimes reading M114 failed
+		self.write('M400')
+		while self.read() != 'ok':
+			pass
+		# end of hack
+
 		self.write("M114")
 		#pos = self.read()
 		while True:
@@ -89,6 +97,28 @@ class Machine:
 
 		return posXY
 
+	def relMove(self, axis, value, speed):
+		gcode = 'G0 '+axis+str(value)+' F'+str(speed) 
+		self.addToQueue('G91')
+		self.addToQueue(gcode)
+		self.addToQueue('G90')
+		self.dumpQueue()
+		self.run()
+
+	def goTo(self, pos, speed):
+		pass
+		gcode = 'G0 X'+str(pos[0]) + ' Y'+ str(pos[1])+ ' F'+str(speed) 
+		self.addToQueue('G90')
+		self.addToQueue(gcode)
+		self.dumpQueue()
+		self.run()
+
+
+
+	def home(self):
+		self.addToQueue('G28')
+		self.dumpQueue()
+		self.run()
 
 	def addToQueue(self, gcode):
 		self.queue.append(gcode)
@@ -137,184 +167,5 @@ class Machine:
 			return True
 		else:
 			return False
-'''
-'''
-machine = Machine('/dev/ttyACM0')
-#machine.dumpQueue()
-#machine.run()
-#machine.isQueueEmpty()
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-#machine.addToQueue('M114')
-machine.dumpQueue()
-#machine.write('version\r\n')
-#machine.read()
-machine.run()
-
-machine.addToQueue('M105')
-machine.addToQueue('G1 X0 Y0 F11000')
-#machine.addToQueue('M114')
-machine.dumpQueue()
-#machine.write('version\r\n')
-#machine.read()
-machine.run()
-
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M114')
-machine.addToQueue('M114')
-machine.run()
-
-
-
-
-
-
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M105')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M105')
-machine.addToQueue('G1 X0 Y0 F11000')
-machine.addToQueue('M114')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M114')
-machine.addToQueue('M114')
-machine.run()
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M105')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M105')
-machine.addToQueue('G1 X0 Y0 F11000')
-machine.addToQueue('M114')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M114')
-machine.addToQueue('M114')
-machine.run()
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M105')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M105')
-machine.addToQueue('G1 X0 Y0 F11000')
-machine.addToQueue('M114')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M114')
-machine.addToQueue('M114')
-machine.run()
-
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M105')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M105')
-machine.addToQueue('G1 X0 Y0 F11000')
-machine.addToQueue('M114')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M114')
-machine.addToQueue('M114')
-machine.run()
-
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M105')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M105')
-machine.addToQueue('G1 X0 Y0 F11000')
-machine.addToQueue('M114')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M114')
-machine.addToQueue('M114')
-machine.run()
-
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M105')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M105')
-machine.addToQueue('G1 X0 Y0 F11000')
-machine.addToQueue('M114')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M114')
-machine.addToQueue('M114')
-machine.run()
-
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M105')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M105')
-machine.addToQueue('G1 X0 Y0 F11000')
-machine.addToQueue('M114')
-machine.dumpQueue()
-machine.run()
-
-machine.addToQueue('M114')
-machine.addToQueue('G1 X500 Y500 F11000')
-machine.addToQueue('M114')
-machine.addToQueue('M114')
-machine.run()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-machine.disconnect()
-
 '''
 

@@ -1,7 +1,8 @@
 import numpy as np
 import pprint
 import math
-
+import cv2
+from PyQt4 import QtGui
 
 # documentation: none
 
@@ -15,9 +16,12 @@ class Core:
 		self.version = '0.1 alpha'
 
 		# TODO Load these values from file
-		self.topPixelPermm = 30.5 # top camer pixel per mm
+		self.topPixelPermm = 31.6 # top camer pixel per mm
 		self.bottomPixelPermm = 666 #bottom camera pixel per mm
-		self.boardOffset = [6,245] # X,Y position where 0,0 of board is. Board workplace
+		self.topCCDHeight = 480
+		self.topCCDWidth = 640
+
+		#self.boardOffset = [6,245] # X,Y position where 0,0 of board is. Board workplace; => transefered to Board module
 		
 
 	def toPix(self, mm, camera):
@@ -41,6 +45,21 @@ class Core:
 	
 	def getVersion(self):
 		return self.version
+
+	def getTestImage(self):
+		pixmap = QtGui.QPixmap('fiducial3.png')
+		return pixmap
+
+	def getTopImage(self):
+		camcapture = cv2.VideoCapture(0)       
+		ret, frame = camcapture.read()
+
+		image4 = QtGui.QImage(frame,640,480, QtGui.QImage.Format_RGB888).rgbSwapped()
+		pixmap = QtGui.QPixmap.fromImage(image4)
+		return pixmap	
+		#label.setPixmap(pixmap)
+
+
 
 '''
 core = Core()

@@ -17,6 +17,8 @@ from lib import core as libCore
 from lib import machine as libMachine
 from lib import board as libBoard
 
+
+
 from tabs.motion import *
 
 class StartQT4(QtGui.QMainWindow):
@@ -47,17 +49,24 @@ class StartQT4(QtGui.QMainWindow):
 
 		self.treeWidget.itemDoubleClicked.connect(self.what)
 
+
 	@QtCore.pyqtSlot(QtGui.QTreeWidgetItem)
 	def what(self, item):
+		# dojede na dane misto po dvojkliku na soucastku
 		pprint.pprint('yeah'+str(item))
 		pprint.pprint(item.text(4))
 		pprint.pprint(item.text(5))
 		xy = [float(item.text(4)),float(item.text(5))]
+		pprint.pprint(xy)
 		transform = self.board.transform(xy)
-		self.machine.addToQueue('G0 X'+str(transform[0])+' Y'+str(transform[1])+ ' F 8000')
+		pprint.pprint(transform)
+		self.machine.addToQueue('G0 X'+str(transform[0])+' Y'+str(transform[1])+ ' F 2000')
+		self.machine.dumpQueue()
 		self.machine.run()
 		time.sleep(0.3)
 		self.on_btnLoadCCD_clicked()
+
+
 
 
 	def doSomething(self, event):
@@ -121,13 +130,18 @@ class StartQT4(QtGui.QMainWindow):
 
 	@QtCore.pyqtSlot()
 	def on_btnBoardM1_clicked(self):
-		pos = self.machine.currentPos()
-		pprint.pprint(pos)
 
-		self.board.setBoardOffset(pos)
+
 		self.board.mode1()
 
 		
+	@QtCore.pyqtSlot()
+	def on_btnBoardM3_clicked(self):
+		#pos = self.machine.currentPos()
+		#pprint.pprint(pos)
+
+		#self.board.setBoardOffset(pos)
+		self.board.mode3()
 
 
 		'''
@@ -148,90 +162,60 @@ class StartQT4(QtGui.QMainWindow):
 	@QtCore.pyqtSlot()
 	def on_btnCenter_clicked(self):
 		#self.btnCenter.setText(str(self.core.boardOffset[0]) )
-		gcode = 'G0 X'+str(self.core.boardOffset[0]) + ' Y'+ str(self.core.boardOffset[1])+ ' F4000' 
-		#self.machine.addToQueue('G91')
-		self.machine.addToQueue(gcode)
-		self.machine.addToQueue('G90')
-		self.machine.dumpQueue()
-		self.machine.run()
+		self.machine.goTo(self.board.boardOffset, 4000 )
+
+
 
 	@QtCore.pyqtSlot()
 	def on_btnHome_clicked(self):
-		self.machine.addToQueue('G28')
-		self.machine.dumpQueue()
-		self.machine.run()
+		self.machine.home()
 
 	@QtCore.pyqtSlot()
 	def on_btnMoveXn_clicked(self):
+		self.machine.relMove('X', -1, 2000)
+		'''
 		gcode = 'G0 X-1 F2000' 
 		self.machine.addToQueue('G91')
 		self.machine.addToQueue(gcode)
 		self.machine.addToQueue('G90')
 		self.machine.dumpQueue()
 		self.machine.run()
+		'''
 
 	@QtCore.pyqtSlot()
 	def on_btnMoveXn2_clicked(self):
-		gcode = 'G0 X-10 F2000' 
-		self.machine.addToQueue('G91')
-		self.machine.addToQueue(gcode)
-		self.machine.addToQueue('G90')
-		self.machine.dumpQueue()
-		self.machine.run()
+		self.machine.relMove('X', -10, 2000)
+
 
 	@QtCore.pyqtSlot()
 	def on_btnMoveXp_clicked(self):
-		gcode = 'G0 X1 F2000' 
-		self.machine.addToQueue('G91')
-		self.machine.addToQueue(gcode)
-		self.machine.addToQueue('G90')
-		self.machine.dumpQueue()
-		self.machine.run()
+		self.machine.relMove('X', 1, 2000)		
+
 
 	@QtCore.pyqtSlot()
 	def on_btnMoveXp2_clicked(self):
-		gcode = 'G0 X10 F2000' 
-		self.machine.addToQueue('G91')
-		self.machine.addToQueue(gcode)
-		self.machine.addToQueue('G90')
-		self.machine.dumpQueue()
-		self.machine.run()
+		self.machine.relMove('X', 10, 2000)
+
 
 	@QtCore.pyqtSlot()
 	def on_btnMoveYn_clicked(self):
-		gcode = 'G0 Y-1 F2000' 
-		self.machine.addToQueue('G91')
-		self.machine.addToQueue(gcode)
-		self.machine.addToQueue('G90')
-		self.machine.dumpQueue()
-		self.machine.run()
+		self.machine.relMove('Y', -1, 2000)
+
 
 	@QtCore.pyqtSlot()
 	def on_btnMoveYn2_clicked(self):
-		gcode = 'G0 Y-10 F2000' 
-		self.machine.addToQueue('G91')
-		self.machine.addToQueue(gcode)
-		self.machine.addToQueue('G90')
-		self.machine.dumpQueue()
-		self.machine.run()
+		self.machine.relMove('Y', -10, 2000)
+
 
 	@QtCore.pyqtSlot()
 	def on_btnMoveYp_clicked(self):
-		gcode = 'G0 Y1 F2000' 
-		self.machine.addToQueue('G91')
-		self.machine.addToQueue(gcode)
-		self.machine.addToQueue('G90')
-		self.machine.dumpQueue()
-		self.machine.run()
+		self.machine.relMove('Y', 1, 2000)
+
 
 	@QtCore.pyqtSlot()
 	def on_btnMoveYp2_clicked(self):
-		gcode = 'G0 Y10 F2000' 
-		self.machine.addToQueue('G91')
-		self.machine.addToQueue(gcode)
-		self.machine.addToQueue('G90')
-		self.machine.dumpQueue()
-		self.machine.run()
+		self.machine.relMove('Y', 10, 2000)
+
 
 	#mega decorators :)
 	@QtCore.pyqtSlot()
@@ -336,7 +320,7 @@ class StartQT4(QtGui.QMainWindow):
 		label.setScaledContents(True) 
 		
 		
-		pixmap = QtGui.QPixmap('base3D_mk3_012.mnt.png')
+		pixmap = QtGui.QPixmap('base3D_mk2.mnt.png')
 		label.setPixmap(pixmap)
 
 
@@ -358,6 +342,8 @@ class StartQT4(QtGui.QMainWindow):
 		#img = cv2.imread('base3D_mk3_012.mnt.png',0) # template
 		#img2 = cv2.resize(img, (100,200))
 
+		
+		# TODO  udelat online stream podle http://paste.fedoraproject.org/202220/42721993/
 		camcapture = cv2.VideoCapture(0)       
 		#camcapture.set(CV_CAP_PROP_FRAME_WIDTH, 1280)
 		#camcapture.set(cv2.CV_CAP_PROP_FRAME_HEIGHT, 720);
@@ -366,6 +352,16 @@ class StartQT4(QtGui.QMainWindow):
 
 		image4 = QtGui.QImage(frame,640,480, QtGui.QImage.Format_RGB888).rgbSwapped()
 		pixmap = QtGui.QPixmap.fromImage(image4)
+
+
+		paint = QtGui.QPainter(pixmap);
+		pen = QtGui.QPen(QtGui.QColor(255,0,0,255), 1)
+		paint.setPen(pen)
+		paint.drawLine(0, 240, 640, 240   );
+		paint.drawLine(320, 0, 320, 480   );
+		del paint # important!
+
+
 		label.setPixmap(pixmap)
 		
 
@@ -377,7 +373,7 @@ class StartQT4(QtGui.QMainWindow):
 		#self.filename = fd.getOpenFileName()
 
 		#for debug purposes only
-		self.filename = 'base3D.mnt'
+		self.filename = 'base3D_mk2.mnt'
 			
 		from os.path import isfile
 		if isfile(self.filename):
@@ -414,12 +410,21 @@ class StartQT4(QtGui.QMainWindow):
 						fiducial = []
 						fiducial.append(float(values2[3])) # Xorigin
 						fiducial.append(float(values2[4])) # Yorigin
-						self.fiduc.append(fiducial)						
+						self.fiduc.append(fiducial)	
+					
+						#ok ////
+						self.board.addFiducial(fiducial)					
 
 					if line.startswith('%fiducials'):
 
 						fiducials = 1
 			pprint.pprint(self.fiduc)
+			
+			# OK ////
+			self.lblO1.setText('X:'+str(self.board.fiducials[0][0])+' Y:'+str(self.board.fiducials[0][1]))
+			self.lblO2.setText('X:'+str(self.board.fiducials[1][0])+' Y:'+str(self.board.fiducials[1][1]))
+			self.lblO3.setText('X:'+str(self.board.fiducials[2][0])+' Y:'+str(self.board.fiducials[2][1]))
+
 			# setting header labels
 			tree = self.treeWidget
 			tree.setHeaderLabels(['Part name','Package','Value', 'Rotation','X origin','Y origin', 'X center','Y center'])
