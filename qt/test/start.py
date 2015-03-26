@@ -16,7 +16,7 @@ import time
 from lib import core as libCore
 from lib import machine as libMachine
 from lib import board as libBoard
-
+from lib import devices as libDevices
 
 
 from tabs.motion import *
@@ -25,7 +25,7 @@ class StartQT4(QtGui.QMainWindow):
 	def __init__(self, *args):
 		super(StartQT4, self).__init__(*args)
 		
-		a = uic.loadUi('mainwindow.ui', self)
+		ui = uic.loadUi('mainwindow.ui', self)
 		#all code must be inserted after self.ui.setupUi(self)
 
 		
@@ -36,19 +36,23 @@ class StartQT4(QtGui.QMainWindow):
 
 
  		# core initialization - basic functions and setup
-		self.core = libCore.Core()
+		self.core = libCore.Core(ui)
 		pprint.pprint(self.core.getVersion())
 
 		# load machine module - connection to the machine will be done later
 		self.machine = libMachine.Machine()
 
 		# board alignment and coordinates transformation
-		pprint.pprint(self)
 		#ui =  Ui_MainWindow()
-		self.board = libBoard.Board(a)
+		self.board = libBoard.Board(ui)
+
+
+ 		# Devices initialization
+		self.devices = libDevices.Devices(ui)
+
 
 		self.treeWidget.itemDoubleClicked.connect(self.what)
-
+		#self.treeDevices.itemDoubleClicked.connect(self.devices)
 
 	@QtCore.pyqtSlot(QtGui.QTreeWidgetItem)
 	def what(self, item):
@@ -181,6 +185,9 @@ class StartQT4(QtGui.QMainWindow):
 		self.machine.dumpQueue()
 		self.machine.run()
 		'''
+	@QtCore.pyqtSlot()
+	def on_btnMoveXn1_clicked(self):
+		self.machine.relMove('X', -0.1, 2000)
 
 	@QtCore.pyqtSlot()
 	def on_btnMoveXn2_clicked(self):
@@ -191,6 +198,9 @@ class StartQT4(QtGui.QMainWindow):
 	def on_btnMoveXp_clicked(self):
 		self.machine.relMove('X', 1, 2000)		
 
+	@QtCore.pyqtSlot()
+	def on_btnMoveXp1_clicked(self):
+		self.machine.relMove('X', 0.1, 2000)
 
 	@QtCore.pyqtSlot()
 	def on_btnMoveXp2_clicked(self):
@@ -201,6 +211,9 @@ class StartQT4(QtGui.QMainWindow):
 	def on_btnMoveYn_clicked(self):
 		self.machine.relMove('Y', -1, 2000)
 
+	@QtCore.pyqtSlot()
+	def on_btnMoveYn1_clicked(self):
+		self.machine.relMove('Y', -0.1, 2000)
 
 	@QtCore.pyqtSlot()
 	def on_btnMoveYn2_clicked(self):
@@ -211,6 +224,9 @@ class StartQT4(QtGui.QMainWindow):
 	def on_btnMoveYp_clicked(self):
 		self.machine.relMove('Y', 1, 2000)
 
+	@QtCore.pyqtSlot()
+	def on_btnMoveYp1_clicked(self):
+		self.machine.relMove('Y', 0.1, 2000)
 
 	@QtCore.pyqtSlot()
 	def on_btnMoveYp2_clicked(self):
@@ -528,7 +544,27 @@ class StartQT4(QtGui.QMainWindow):
 					self.combo = QtGui.QComboBox()
 					
 
+	@QtCore.pyqtSlot()
+	def on_btnAddDevice_clicked(self):
+		self.devices.add()
 
+
+	@QtCore.pyqtSlot()
+	def on_btnEditDevice_clicked(self):
+		self.devices.edit()
+
+	@QtCore.pyqtSlot()
+	def on_btnRemoveDevice_clicked(self):
+		self.devices.removeDevice()
+
+	@QtCore.pyqtSlot()
+	def on_btnStSave_clicked(self):
+		self.devices.saveDevice()
+
+	@QtCore.pyqtSlot()
+	def on_btnStAlign_clicked(self):
+		#testovaci hack
+		self.devices.getPickPos(self.txtDeviceName.text())
 
 
 class MyLabel(QtGui.QLabel):

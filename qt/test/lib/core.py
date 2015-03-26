@@ -2,7 +2,7 @@ import numpy as np
 import pprint
 import math
 import cv2
-from PyQt4 import QtGui
+from PyQt4 import QtCore, QtGui
 
 # documentation: none
 
@@ -12,7 +12,10 @@ from PyQt4 import QtGui
 class Core:
 	'setup'
 
-	def __init__(self):
+	def __init__(self, mainWindow):
+		self.mainWindow = mainWindow
+
+
 		self.version = '0.1 alpha'
 
 		# TODO Load these values from file
@@ -58,6 +61,10 @@ class Core:
 		pixmap = QtGui.QPixmap.fromImage(image4)
 		return pixmap	
 		#label.setPixmap(pixmap)
+
+	def log(self, wat):
+		self.mainWindow.listTerminal.addItem(str(wat))
+		self.mainWindow.listTerminal.scrollToBottom()
 
 
 

@@ -1,4 +1,3 @@
-#from fiducials import *
 import pprint as pp
 import numpy as np
 

@@ -1421,7 +1421,7 @@ QGroupBox::title {
      <bool>false</bool>
     </property>
     <property name="layoutMode">
-     <enum>QListView::Batched</enum>
+     <enum>QListView::SinglePass</enum>
     </property>
     <property name="sortingEnabled">
      <bool>false</bool>
