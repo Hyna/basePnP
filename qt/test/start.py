@@ -67,7 +67,7 @@ class StartQT4(QtGui.QMainWindow):
 		self.machine.addToQueue('G0 X'+str(transform[0])+' Y'+str(transform[1])+ ' F 2000')
 		self.machine.dumpQueue()
 		self.machine.run()
-		time.sleep(0.3)
+		time.sleep(0.5)
 		self.on_btnLoadCCD_clicked()
 
 

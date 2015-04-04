@@ -108,41 +108,6 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
-    <property name="geometry">
-     <rect>
-      <x>540</x>
-      <y>90</y>
-      <width>83</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>tray 1</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>tray 2</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>tray 3</string>
-     </property>
-    </item>
-   </widget>
-   <widget class="QDial" name="dial">
-    <property name="geometry">
-     <rect>
-      <x>470</x>
-      <y>70</y>
-      <width>50</width>
-      <height>64</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="lblAbout">
     <property name="geometry">
      <rect>
@@ -1421,7 +1386,7 @@ QGroupBox::title {
      <bool>false</bool>
     </property>
     <property name="layoutMode">
-     <enum>QListView::Batched</enum>
+     <enum>QListView::SinglePass</enum>
     </property>
     <property name="sortingEnabled">
      <bool>false</bool>
