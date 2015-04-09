@@ -16,10 +16,10 @@ class Core:
 		self.mainWindow = mainWindow
 
 
-		self.version = '0.1 alpha'
+		self.version = '0.2 alpha'
 
 		# TODO Load these values from file
-		self.topPixelPermm = 31.6 # top camer pixel per mm
+		self.topPixelPermm = 25.51 # top camer pixel per mm
 		self.bottomPixelPermm = 666 #bottom camera pixel per mm
 		self.topCCDHeight = 480
 		self.topCCDWidth = 640

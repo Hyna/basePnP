@@ -65,6 +65,7 @@ class StartQT4(QtGui.QMainWindow):
 		transform = self.board.transform(xy)
 		pprint.pprint(transform)
 		self.machine.addToQueue('G0 X'+str(transform[0])+' Y'+str(transform[1])+ ' F 2000')
+		self.machine.addToQueue('G90')
 		self.machine.dumpQueue()
 		self.machine.run()
 		time.sleep(0.5)
@@ -232,6 +233,13 @@ class StartQT4(QtGui.QMainWindow):
 	def on_btnMoveYp2_clicked(self):
 		self.machine.relMove('Y', 10, 2000)
 
+	@QtCore.pyqtSlot()
+	def on_btnVacOpen_clicked(self):
+		self.machine.pick()
+
+	@QtCore.pyqtSlot()
+	def on_btnVacClose_clicked(self):
+		self.machine.place()
 
 	#mega decorators :)
 	@QtCore.pyqtSlot()

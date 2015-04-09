@@ -20,7 +20,7 @@ class Board:
 		self.aligned = False
 		self.mode = 1 # mode 1 means Manual Zero position - no fiducials
 
-		self.boardOffset = [5.001,244]
+		self.boardOffset = [7.801,143.6]
 		#self.fiducials = libFiducials.fiducialFinder()
 
 		self.hasFiducials = False

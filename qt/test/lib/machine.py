@@ -113,7 +113,21 @@ class Machine:
 		self.dumpQueue()
 		self.run()
 
+	def valveOpen(self):
+		self.addToQueue('M43')	
+	
+	def valveClose(self):
+		self.addToQueue('M42')	
+	
+	def pick(self):
+		self.addToQueue('G30')
+		self.valveOpen()
+		self.run()
 
+	def place(self):
+		self.addToQueue('G30')
+		self.valveClose()
+		self.run()
 
 	def home(self):
 		self.addToQueue('G28')
