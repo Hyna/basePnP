@@ -119,8 +119,11 @@ class Machine:
 	def valveClose(self):
 		self.addToQueue('M42')	
 	
-	def pick(self):
-		self.addToQueue('G30')
+	def pick(self, z = None):
+		if z == None:
+			self.addToQueue('G30') # jeď dolů dokud nesepne výškový sensor
+		else:
+			self.addtoQueue('G0 Z' + str(z) ) # jdi v ose Z na danou výšku	
 		self.valveOpen()
 		self.run()
 
