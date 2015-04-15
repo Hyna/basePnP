@@ -4,7 +4,8 @@ import time
 
 class Machine:
 
-	def __init__(self):
+	def __init__(self, mainWindow):
+		self.mainWindow = mainWindow
 
 		self.queue = []
 
@@ -58,7 +59,7 @@ class Machine:
 	def read(self):
 		line = self.serial.readline()
 		line = line.strip()
-		#pp.pprint(line.strip())
+		pp.pprint(line.strip())
 		return line
 
 	def currentPos(self):
@@ -121,9 +122,9 @@ class Machine:
 	
 	def pick(self, z = None):
 		if z == None:
-			self.addToQueue('G30') # jeď dolů dokud nesepne výškový sensor
+			self.addToQueue('G30') # jed dolu dokud nesepne vyskovy sensor
 		else:
-			self.addtoQueue('G0 Z' + str(z) ) # jdi v ose Z na danou výšku	
+			self.addtoQueue('G0 Z' + str(z) ) # jdi v ose Z na danou vysku	
 		self.valveOpen()
 		self.run()
 
@@ -132,6 +133,55 @@ class Machine:
 		self.valveClose()
 		self.run()
 
+	def vacCheck(self):
+
+
+		import logging
+		import time
+		logger = logging.getLogger('myapp')
+		hdlr = logging.FileHandler('/var/tmp/myapp.log')
+		formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+		hdlr.setFormatter(formatter)
+		logger.addHandler(hdlr) 
+		logger.setLevel(logging.WARNING)
+
+		i = 0
+		self.valveClose()
+		self.run()
+		time.sleep(2)
+		while True:
+			pressure = self.getResponse('M105')
+
+			i=i+1
+
+			if i == 25:
+				self.valveOpen()
+				self.run()
+				time.sleep(0.5)
+			#raw = None
+			#RAW value from DAC 0-4096
+			end = pressure.find('.0')
+			pp.pprint(end)
+			raw = pressure[5:end]
+			pp.pprint(raw)
+			progressbar = 100 - ((4096-int(raw))/4096)*100
+			self.mainWindow.barVac.setValue(progressbar)
+		
+	
+			self.mainWindow.core.log('Vacuum: '+ str(raw))	
+		
+			logger.error('RAW:'+str(raw))	
+			time.sleep(0.2)
+
+			if i == 80:
+				time.sleep(0.5)
+				self.valveClose()
+				self.run()
+				time.sleep(0.5)
+			if i>100:
+				break
+
+
 	def home(self):
 		self.addToQueue('G28')
 		self.dumpQueue()
@@ -139,6 +189,21 @@ class Machine:
 
 	def addToQueue(self, gcode):
 		self.queue.append(gcode)
+
+	def getResponse(self, gcode):
+		if self.isQueueEmpty() is True:
+			self.write(gcode)
+			while True:
+				read =  self.read()
+				if read.startswith('ok'):
+					pp.pprint('Machine:getResponse(gcode): '+ read )	
+					return read					
+
+		else:
+			pp.pprint('Machine:getResponse(gcode): Queue is notempty. Try again.')	
+			return None		
+
+
 
 	def run(self):
 		if self.isQueueEmpty() is False:

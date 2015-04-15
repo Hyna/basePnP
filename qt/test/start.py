@@ -40,7 +40,7 @@ class StartQT4(QtGui.QMainWindow):
 		pprint.pprint(self.core.getVersion())
 
 		# load machine module - connection to the machine will be done later
-		self.machine = libMachine.Machine()
+		self.machine = libMachine.Machine(ui)
 
 		# board alignment and coordinates transformation
 		#ui =  Ui_MainWindow()
@@ -241,6 +241,11 @@ class StartQT4(QtGui.QMainWindow):
 	def on_btnVacClose_clicked(self):
 		self.machine.place()
 
+	@QtCore.pyqtSlot()
+	def on_btnVacCheck_clicked(self):
+		self.machine.vacCheck()
+
+
 	#mega decorators :)
 	@QtCore.pyqtSlot()
 	def on_imgCCD_mousePressEvent(self):
@@ -298,7 +303,7 @@ class StartQT4(QtGui.QMainWindow):
 			
 			label =self.imgCCD
 			label.setScaledContents(True) 
-			pixmap = QtGui.QPixmap('base3D_mk3_012.mnt.png')
+			pixmap = QtGui.QPixmap('base3D.mnt.png')
 
 			a = label.size()
 			b = pixmap.size()
@@ -344,7 +349,7 @@ class StartQT4(QtGui.QMainWindow):
 		label.setScaledContents(True) 
 		
 		
-		pixmap = QtGui.QPixmap('base3D_mk2.mnt.png')
+		pixmap = QtGui.QPixmap('base3D.mnt.png')
 		label.setPixmap(pixmap)
 
 
