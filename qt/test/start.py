@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import sys
 import os
 from PyQt4 import QtCore, QtGui, uic
@@ -537,14 +536,21 @@ class StartQT4(QtGui.QMainWindow):
 				row.setText(6, items[1]) # X pads center
 				row.setText(7, items[2]) # Y pads center
 				
-
+			i=0
 			# display groups of devices with same PACKAGE/VALUE
 			for key, item in dic.items():
 				#pprint.pprint('jsem tu')				
 				row = QtGui.QTreeWidgetItem(self.treePackages)
 				row.setText(0, key) # Group package|value
-				row.setText(2, 'tray: None') # tray
 				row.setCheckState(1, QtCore.Qt.Checked)
+				#row.setText(2, 'tray: None') # tray
+
+				combo = QtGui.QComboBox(self)
+				combo.addItem('Necum')
+				combo.addItem('voe')
+				combo.setObjectName("combo"+QtCore.QString.number(i));
+				self.treePackages.setItemWidget(row, 2, combo)
+				i=i+1
 
 				for key2, item2 in dic[key].items():
 					subrow = QtGui.QTreeWidgetItem(row)
@@ -555,8 +561,37 @@ class StartQT4(QtGui.QMainWindow):
 					#subrow.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
 
 					self.combo = QtGui.QComboBox()
-					
 
+
+	@QtCore.pyqtSlot()
+	def on_btnHook_clicked(self):
+
+		#http://stackoverflow.com/questions/8961449/pyqt-qtreewidget-iterating
+		root = self.treePackages.invisibleRootItem()
+		child_count = root.childCount()
+
+		pprint.pprint(child_count)
+		pprint.pprint(root)
+
+		for i in range(child_count):
+			item = root.child(i)
+			device = item.text(0)
+			checked = item.checkState(1)
+			#import IPython
+			#IPython.embed()
+			#child.checkState(0) == QtCore.Qt.Checked
+			pprint.pprint(device)
+			pprint.pprint(checked)
+			
+			#combo = QtGui.QComboBox(item)
+		
+			
+			#package = self.treePackages.cellWidget(1,2)
+			package = self.combo1.currentText()
+			pprint.pprint(package)
+			#combo box currentText
+
+			
 	@QtCore.pyqtSlot()
 	def on_btnAddDevice_clicked(self):
 		self.devices.add()
