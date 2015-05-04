@@ -67,7 +67,7 @@ class StartQT4(QtGui.QMainWindow):
 		self.machine.addToQueue('G90')
 		self.machine.dumpQueue()
 		self.machine.run()
-		time.sleep(0.5)
+		time.sleep(0.1)
 		self.on_btnLoadCCD_clicked()
 
 
@@ -233,6 +233,14 @@ class StartQT4(QtGui.QMainWindow):
 		self.machine.relMove('Y', 10, 2000)
 
 	@QtCore.pyqtSlot()
+	def on_btnMoveZp_clicked(self):
+		self.machine.relMove('Z', 1, 2000)
+
+	@QtCore.pyqtSlot()
+	def on_btnMoveZn_clicked(self):
+		self.machine.relMove('Z', -1, 2000)
+
+	@QtCore.pyqtSlot()
 	def on_btnVacOpen_clicked(self):
 		self.machine.pick()
 
@@ -302,7 +310,7 @@ class StartQT4(QtGui.QMainWindow):
 			
 			label =self.imgCCD
 			label.setScaledContents(True) 
-			pixmap = QtGui.QPixmap('base3D.mnt.png')
+			pixmap = QtGui.QPixmap('demo2.mnt.png')
 
 			a = label.size()
 			b = pixmap.size()
@@ -348,7 +356,7 @@ class StartQT4(QtGui.QMainWindow):
 		label.setScaledContents(True) 
 		
 		
-		pixmap = QtGui.QPixmap('base3D.mnt.png')
+		pixmap = QtGui.QPixmap('demo2.mnt.png')
 		label.setPixmap(pixmap)
 
 
@@ -401,7 +409,7 @@ class StartQT4(QtGui.QMainWindow):
 		#self.filename = fd.getOpenFileName()
 
 		#for debug purposes only
-		self.filename = 'base3D_mk2.mnt'
+		self.filename = 'demo2.mnt'
 			
 		from os.path import isfile
 		if isfile(self.filename):
@@ -411,6 +419,11 @@ class StartQT4(QtGui.QMainWindow):
 				array = [] # array of lines. not yet exploded.
 				array_split = [] # two dimensional array with exploded lines
 				self.fiduc = []
+				self.board.clearFiducials()
+
+				self.hack_bom = {}
+
+				#pprint.pprint('tu to mazu')
 				for line in fo:
 					if line.startswith('%end_data'):
 						data = 0
@@ -424,7 +437,12 @@ class StartQT4(QtGui.QMainWindow):
 						for value in values:
 							pole.append(value)
 							#pprint.pprint(value)
+						
 						array_split.append(pole)
+						
+						index = values[0]
+						self.hack_bom[str(index)] = pole
+						pprint.pprint(self.hack_bom)
 
 					if line.startswith('%data'):
 						data = 1
@@ -478,6 +496,8 @@ class StartQT4(QtGui.QMainWindow):
 
 			array2 = array # copy of array with lines
 			dic = {}
+
+			# origins jsou krizky pro simulaci. Odjebat
 			self.origins = array_split
 			
 			
@@ -520,6 +540,7 @@ class StartQT4(QtGui.QMainWindow):
 			#pprint.pprint(dic)
 
 
+			self.treeWidget.clear()
 			# Display list of all devices exported from eagle
 			for item in array:
 				row = QtGui.QTreeWidgetItem(self.treeWidget)
@@ -537,6 +558,11 @@ class StartQT4(QtGui.QMainWindow):
 				row.setText(7, items[2]) # Y pads center
 				
 			i=0
+
+
+
+
+			self.treePackages.clear()
 			# display groups of devices with same PACKAGE/VALUE
 			for key, item in dic.items():
 				#pprint.pprint('jsem tu')				
@@ -545,10 +571,18 @@ class StartQT4(QtGui.QMainWindow):
 				row.setCheckState(1, QtCore.Qt.Checked)
 				#row.setText(2, 'tray: None') # tray
 
+				devices = self.devices.getDevices()
+
 				combo = QtGui.QComboBox(self)
-				combo.addItem('Necum')
-				combo.addItem('voe')
-				combo.setObjectName("combo"+QtCore.QString.number(i));
+				combo.addItem('-- select --')
+				
+				for item in devices:
+				
+					#combo.addItem('Necum')
+					#combo.addItem('voe')
+					combo.addItem(item)
+
+				#combo.setObjectName("combo"+QtCore.QString.number(i));
 				self.treePackages.setItemWidget(row, 2, combo)
 				i=i+1
 
@@ -573,23 +607,69 @@ class StartQT4(QtGui.QMainWindow):
 		pprint.pprint(child_count)
 		pprint.pprint(root)
 
+
+
 		for i in range(child_count):
 			item = root.child(i)
 			device = item.text(0)
 			checked = item.checkState(1)
-			#import IPython
-			#IPython.embed()
-			#child.checkState(0) == QtCore.Qt.Checked
-			pprint.pprint(device)
-			pprint.pprint(checked)
-			
-			#combo = QtGui.QComboBox(item)
-		
-			
-			#package = self.treePackages.cellWidget(1,2)
-			package = self.combo1.currentText()
-			pprint.pprint(package)
-			#combo box currentText
+	
+			if checked == QtCore.Qt.Checked:
+
+
+				#child.checkState(0) == QtCore.Qt.Checked
+				pprint.pprint(device)
+	
+				
+				combo = self.treePackages.itemWidget(item, 2)
+				package = combo.currentText()
+				#pp.pprint(package)
+				if package == '-- select --':
+					self.core.log('No tray was selected for '+str(device))
+					break
+				
+				subitemChild_count = item.childCount()
+				for j in range(subitemChild_count):
+					subItem = item.child(j)
+					pprint.pprint('Osazujeeeem'+str(subItem.text(0)))
+					pprint.pprint(package)
+
+					pickPos = self.devices.getPickPos2(package)
+					if pickPos is None:
+						break
+					pprint.pprint(pickPos)
+
+					self.machine.addToQueue('G0 X'+str(pickPos[0])+' Y'+str(pickPos[1])+ ' F 2000')
+					self.machine.addToQueue('G90')
+					self.machine.dumpQueue()
+					self.machine.run()
+
+
+					pprint.pprint(subItem)
+
+					index = str(subItem.text(0))
+					placeX = self.hack_bom[index][1]
+					placeY = self.hack_bom[index][2]
+					pprint.pprint(placeX)
+					pprint.pprint(placeY)
+					
+					xy = [float(placeX),float(placeY)]
+					transform = self.board.transform(xy)
+					pprint.pprint(transform)
+					self.machine.addToQueue('G0 X'+str(transform[0])+' Y'+str(transform[1])+ ' F 2000')
+					self.machine.addToQueue('G90')
+					self.machine.dumpQueue()
+					self.machine.run()
+					#time.sleep(0.5)
+					#self.on_btnLoadCCD_clicked()
+
+
+
+
+
+
+
+		self.core.log('ALL DONE! Please check placement status for skipped patrs.')
 
 			
 	@QtCore.pyqtSlot()
@@ -612,7 +692,8 @@ class StartQT4(QtGui.QMainWindow):
 	@QtCore.pyqtSlot()
 	def on_btnStAlign_clicked(self):
 		#testovaci hack
-		self.devices.getPickPos(self.txtDeviceName.text())
+		#self.devices.getPickPos(self.txtDeviceName.text())
+		self.devices.getPickPos2(self.txtDeviceName.text())
 
 
 class MyLabel(QtGui.QLabel):

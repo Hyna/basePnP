@@ -1,0 +1,2 @@
+[03:47] <impure_hate> combo = self.treePackages.itemWidget(item, 2) [22:33:59]
+[03:47] <impure_hate> package = combo.currentText() [22:34:11]

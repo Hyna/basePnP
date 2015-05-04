@@ -201,3 +201,8 @@ class Board:
 		print 'Fiducial found.'
 		return circles[0][0]
 	
+
+	def clearFiducials(self):
+		self.fiducials = []
+		self.hasFiducials = False
+		self.fiducialsCount =  0

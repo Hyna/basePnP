@@ -98,10 +98,13 @@ class Devices:
 			self.mainWindow.core.log('info: Current index cant be higher than part count')
 			return
 
+		orientation = self.mainWindow.boxStOrientation.currentIndex()
+
 		properties = []
 		properties.append(int(pitch)) #
 		properties.append(partCount)
 		properties.append(currentIndex)
+		properties.append(orientation)
 
 		#TODO toto je jen hack, dodelat centrovani prvni pozice
 		firstPos = self.mainWindow.machine.currentPos()
@@ -128,6 +131,7 @@ class Devices:
 			#2 = index
 			#3 = first pos
 			#4 = current pos
+			#5 = orientation
 			pitch = device[2][0]
 			currentIndex = device[2][2]
 	
@@ -146,9 +150,45 @@ class Devices:
 		self.devices[name][2][2] = 1
 
 
+	def getPickPos2(self, name):
+		device = self.devices[name]
+		pp.pprint(self.devices)
+		if device == None:
+			self.mainWindow.core.log('error: This name does not exist: '+str(name))
+			return None
 
+		partCount = device[2][1]
+		if partCount <= 0:
+			self.mainWindow.core.log('info: Empty tray with '+str(name))
+			return None
+		
+		currentIndex = device[2][2]
+		if currentIndex >= partCount:
+			self.mainWindow.core.log('info: No parts left: '+str(name))
+			self.devices[name][1] = 1
+			return None
 
+		# legenda
+		#2 = index
+		#3 = first pos
+		#4 = current pos
+		#5 = orientation
+		
+		pitch = device[2][0]
+		
+		orientation = device[2][5]
+		pp.pprint(orientation)
+		
+		#-pitch*(currentIndex-1)
+		xPick = device[2][4][0] 
+		yPick = device[2][4][1]
+		pickPos = [xPick, yPick]
+		QtGui.QApplication.processEvents()
 
+		# update curentIndex +1
+		self.devices[name][2][2] = self.devices[name][2][2] + 1
+		
+		return pickPos
 
 
 

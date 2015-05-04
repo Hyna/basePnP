@@ -222,9 +222,13 @@ class Machine:
 #						break
 #					else:
 #						print('big looser')		
+				while True:
+					response = self.read()
+					if response.startswith('ok'):
+						break
 
-				while self.read().startswith('ok'):
-					pass
+#				while self.read().startswith('ok'):
+#					pass
 
 					
 #				response = self.read()
