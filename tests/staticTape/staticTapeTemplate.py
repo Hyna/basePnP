@@ -120,7 +120,7 @@ for i in circles2[0,:]:
 #pprint.pprint(circles2)
 
 
-cv2.imwrite('res1.png',cimg2)
+
 
 fig = plt.figure()
 

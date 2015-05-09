@@ -20,7 +20,7 @@ class FiducialFinder:
 
 	def getPosition(self, img):
 		grayImg = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-		blurImg = cv2.medianBlur(grayImg, 5) # image is blured, it gives beter precision. See tests/fiducials/fiducials.py
+		blurImg = cv2.medianBlur(grayImg, 5) # image is blured, it gives beter precision due to noise reducition. See tests/fiducials/fiducials.py
 		circles = cv2.HoughCircles(blurImg,cv2.HOUGH_GRADIENT,1,self.minDist,
                             param1=50,param2=30,minRadius=10,maxRadius=45)
 		circles = np.uint16(np.around(circles))

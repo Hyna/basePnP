@@ -1,0 +1,16 @@
+centrovani desky pomoci trech fiducials
+
+python:
+http://docs.opencv.org/trunk/doc/py_tutorials/py_imgproc/py_geometric_transformations/py_geometric_transformations.html
+
+http://stackoverflow.com/questions/9041681/opencv-python-rotate-image-by-x-degrees-around-specific-point
+
+http://stackoverflow.com/questions/15441749/calculation-of-directional-rotation-angles-from-3-points
+
+http://stackoverflow.com/questions/13226038/calculating-angle-between-two-lines-in-python
+
+
+http://nghiaho.com/?page_id=671
+
+funguje
+http://elonen.iki.fi/code/misc-notes/affine-fit/
