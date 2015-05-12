@@ -1,0 +1,229 @@
+% Soubory musí být v kódování, které je nastaveno v příkazu \usepackage[...]{inputenc}
+
+\documentclass[%
+%  draft,    				  % Testovací překlad
+  12pt,       				% Velikost základního písma je 12 bodů
+  a4paper,    				% Formát papíru je A4
+%  oneside,      			% Jednostranný tisk (výchozí)
+%% Z následujicich voleb lze použít maximálně jednu:
+%	dvipdfm  						% výstup bude zpracován programem 'dvipdfm' do PDF
+%	dvips	  						% výstup bude zpracován programem 'dvips' do PS
+%	pdftex							% překlad bude proveden programem 'pdftex' do PDF (výchozí)
+%% Z následujících voleb lze použít jen jednu:
+%english,            % originální jazyk je angličtina
+czech              % originální jazyk je čeština (výchozí)
+%slovak,             % originální jazyk je slovenčina
+]{report}				    	% Dokument třídy 'zpráva'
+
+\usepackage[utf8]		%	Kódování zdrojových souborů je Windows-1250
+	{inputenc}					% Balíček pro nastavení kódování zdrojových souborů
+
+\usepackage{graphicx} % Balíček 'graphicx' pro vkládání obrázků
+											% Nutné pro vložení log školy a fakulty
+
+\usepackage{xcolor,colortbl} % Hyna
+
+\usepackage[
+	nohyperlinks				% Nebudou tvořeny hypertextové odkazy do seznamu zkratek
+]{acronym}						% Balíček 'acronym' pro sazby zkratek a symbolů
+											% Nutné pro použití prostředí 'seznamzkratek' balíčku 'thesis'
+
+\usepackage[
+	unicode,						% Záložky a informace budou v kódování unicode
+	breaklinks=true,		% Hypertextové odkazy mohou obsahovat zalomení řádku
+	hypertexnames=false % Názvy hypertextových odkazů budou tvořeny
+											% nezávisle na názvech TeXu
+]{hyperref}						% Balíček 'hyperref' pro sazbu hypertextových odkazů
+											% Nutné pro použití příkazu 'nastavenipdf' balíčku 'thesis'
+
+\usepackage{pdfpages} % Balíček umožňující vkládat stránky z PDF souborů
+                      % Nutné při vkládání titulních listů a zadání přímo
+                      % ve formátu PDF z informačního systému
+
+\usepackage{enumitem} % Balíček pro nastavení mezerování v odrážkách
+  \setlist{topsep=0pt,partopsep=0pt,noitemsep}
+
+\usepackage{cmap} 		% Balíček cmap zajišťuje, že PDF vytvořené `pdflatexem' je
+											% plně "prohledávatelné" a "kopírovatelné"
+
+\usepackage{upgreek}	% Balíček pro sazbu stojatých řeckých písmem
+											% např. stojaté pí: \uppi
+											% např. stojaté mí: \upmu (použitelné třeba v mikrometrech)
+											% pozor, grafická nekompatibilita s fonty typu Computer Modern!
+
+%% Nastavení českého jazyka při sazbě v češtině.
+% Pro sazbu češtiny je možné použít mezinárodní balíček 'babel', jenž
+% použití doporučujeme pro nové instalace (MikTeX2.8,TeXLive2009), nebo
+% národní balíček 'czech', který doporučujeme ve starších instalacích.
+% Balíček 'babel' bude správně fungovat pouze ve spojení s programy
+% 'latex', 'pdflatex', zatímco balíček 'czech' bude fungovat ve spojení
+% s programy 'cslatex', 'pdfcslatex'.
+% Varianta A:
+\usepackage{babel}             % Balíček pro sazbu různojazyčných dokumentů; kompilovat (pdf)latexem!
+  										% převezme si z parametrů třídy správný jazyk
+\usepackage{lmodern}	% vektorové fonty Latin Modern, nástupce půvoních Knuthových Computern Modern fontů
+\usepackage{textcomp} % Dodatečné symboly
+\usepackage[T1]{fontenc}  % Kódování fontu - mj. kvůli správným vzorům pro dělení slov
+% Varianta B:
+%\usepackage{czech}   % Alternativní balíček pro sazbu v českém jazyce, kompilovat (pdf)cslatexem!
+
+\usepackage[%
+%% Z následujících voleb lze použít pouze jednu
+% left,               % Rovnice a popisky plovoucich objektů budou %zarovnány vlevo
+  center,             % Rovnice a popisky plovoucich objektů budou zarovnány na střed (vychozi)
+%% Z následujících voleb lze použít pouze jednu
+%semestral						%	sazba zprávy semestrálního projektu
+%bachelor						%	sazba bakalářské práce
+diploma						 % sazba diplomové práce
+%treatise            % sazba pojednání o dizertační práci
+%phd                 % sazba dizertační práce
+]{thesis}             % Balíček pro sazbu studentských prací
+                      % Musí být vložen až jako poslední, aby
+                      % ostatní balíčky nepřepisovaly jeho příkazy
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%      Definice informací o dokumentu             %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Název práce:
+%  První parametr je název v originálním jazyce,
+%  druhý je překlad v angličtině nebo češtině (pokud je originální jazyk angličtina)
+\nazev{Název studentské práce}{Title of Student's Thesis}
+
+%% Jméno a příjmení autora ve tvaru
+%  [tituly před jménem]{Křestní}{Příjmení}[tituly za jménem]
+\autor[Bc.]{Hynek}{Štětina}
+
+%% Jméno a příjmení vedoucího včetně titulů
+%  [tituly před jménem]{Křestní}{Příjmení}[tituly za jménem]
+\vedouci[prof.\ Ing.]{Křestní}{Starý}[CSc.]
+
+%% Označení oboru studia
+% První parametr je obor v originálním jazyce,
+% druhý parametr je překlad v angličtině nebo češtině
+\oborstudia{Mikroelektronika}{microelectronic}
+
+%% Označení ústavu
+% První parametr je název ústavu v originálním jazyce,
+% druhý parametr je překlad v angličtině nebo češtině
+\ustav{Ústav telekomunikací}{Department of Telecommunications} 
+
+%% Rok obhajoby
+\rok{2015}
+
+%% Místo obhajoby
+% Na titulních stránkách bude automaticky vysázeno VELKÝMI písmeny
+\misto{Brno}
+
+%% Abstrakt
+\abstrakt{Abstrakt práce v~originálním jazyce
+}{Překlad abstraktu v~angličtině (nebo češtině pokud je originální jazyk angličtina)
+}
+
+%% Klíčová slova
+\klicovaslova{Klíčová slova v~originálním jazyce}%
+	{Překlad klíčových slov v~angličtině nebo češtině}
+
+%% Poděkování
+\podekovanitext{Rád bych poděkoval vedoucímu diplomové práce panu Ing.\ XXX, Ph.D.\ za odborné vedení, konzultace, trpělivost a podnětné návrhy k~práci.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%     Nastavení polí ve Vlastnostech dokumentu PDF      %%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Při vloženém balíčku 'hyperref' lze použít příkaz '\nastavenipdf'
+\nastavenipdf
+%  Nastavení polí je možné provést také ručně příkazem:
+%\hypersetup{
+%  pdftitle={Název studentské práce},    	% Pole 'Document Title'
+%  pdfauthor={Autor studenstké práce},   	% Pole 'Author'
+%  pdfsubject={Typ práce}, 						  	% Pole 'Subject'
+%  pdfkeywords={Klíčová slova}           	% Pole 'Keywords'
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%       Začátek dokumentu               %%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+
+%% Vložení desek generovaných informačním systémem
+\includepdf[pages=1,offset=19mm 0mm]%
+  {pdf/student-desky}% název souboru nesmí obsahovat mezery!
+% nebo vytvoření desek z balíčku
+%\vytvorobalku
+\setcounter{page}{1} %resetovani citace stranek - desky se necisluji
+
+%% Vložení titulního listu generovaného informačním systémem
+\includepdf[pages=1,offset=19mm 0mm]%
+  {pdf/student-titulka}% název souboru nesmí obsahovat mezery!
+% nebo vytvoření titulní stránky z balíčku
+%\vytvortitulku
+   
+%% Vložení zadání generovaného informačním systémem
+\includepdf[pages=1,offset=19mm 0mm]%
+  {pdf/student-zadani}% název souboru nesmí obsahovat mezery!
+% nebo lze vytvořit prázdný list příkazem ze šablony
+%\stranka{}%
+%	{\sffamily\Huge\centering ZDE VLOŽIT LIST ZADÁNÍ}%
+%	{\sffamily\centering Z~důvodu správného číslování stránek}
+
+%% Vysázení stránky s abstraktem
+\vytvorabstrakt
+
+%% Vysázení prohlaseni o samostatnosti
+\vytvorprohlaseni
+
+%% Vysázení poděkování
+\vytvorpodekovani
+
+%% Vysázení poděkování projektu SIX
+% ----------- zakomentujte pokud neodpovida realite
+\vytvorpodekovaniSIX
+
+%% Vysázení obsahu
+\obsah
+
+%% Vysázení seznamu obrázků
+\seznamobrazku
+
+%% Vysázení seznamu tabulek
+\seznamtabulek
+
+%% Vložení souboru 'text/uvod.tex' s úvodem
+\include{text/uvod}
+
+%% Vložení souboru 'text/reseni' s popisem reseni práce
+\include{text/obraz}
+
+%% Vložení souboru 'text/elektro' s popisem vysledků práce
+\include{text/elektro}
+
+%% Vložení souboru 'text/sw' s popisem vysledků práce
+\include{text/sw}
+
+%% Vložení souboru 'text/vysledky' s popisem vysledků práce
+\include{text/vysledky}
+
+%% Vložení souboru 'text/zaver' se závěrem
+\include{text/zaver}
+
+%% Vložení souboru 'text/literatura' se seznamem literatury
+\include{text/literatura}
+
+%% Vložení souboru 'text/zkratky' se seznam použitých symbolů, veličin a zkratek
+\include{text/zkratky}
+
+%% Začátek příloh
+\prilohy
+
+%% Vysázení seznamu příloh
+\seznampriloh
+
+%% Vložení souboru 'text/prilohy' s přílohami
+\include{text/prilohy}
+
+%% Konec dokumentu
+\end{document}

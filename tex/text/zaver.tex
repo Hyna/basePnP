@@ -1,0 +1,18 @@
+\chapter{Závěr}
+
+Limitace velikost soucastek, nedostatek vakua. 
+
+
+
+SW:
+Mnou stanovený požadavek na multiplatformí SW byl splněn, ale bohužel nedošlo na jeho verifikaci v praxi. Všechny testy byly prováděny pouze na operačním systému Fedora 21 (Linux).  Možná inkompatibilita hrozila v různém přístupu systémů k hardware, konkrétně k sériovému portu a dále v kompatibilitě grafického rozhraní. Pro eliminaci problémů s HW byla použita knihovna PySerial, která je dostupná ve verzích pro Windows, Linux i MacOS/X. Stejně tak použitý framework na grafické rozhraní PyQt je dostupný pro již zmíněně operační systémi.
+Při spoušění programu na jiných platformách než Linux se tak nepředpokládají žádné problémy.
+\\
+
+HW:
+Při návrhu a následném testování elektroniky jsem získal velice cenné zkušenosti z oblasti elektromagnetické kompatibility. První prototyp navržené elektroniky byl náchylný na elektromagnetickou susceptibilitu a z toho důvodu docházelo k výpadkům komunkace přes USB rozhraní. Po nastudování nesčetných zdrojů se povedlo v druhé revizi problém eliminovat. A to za pomocí filtrů na signálových cestách a striktním dodržení návrhových pravidel daných výrobcem mikrokontroléru.
+\\
+
+Využití:
+Jak bylo naznačeno v kapitole XXX, osazovací automat může být po úpravě řídícího SW využit i pro automatickou optickou inspekci (AOI) osazených a zapájených DPS. Spojil by tak dva kroky výrobního procesu DPS do jednoho přístroje.
+Realizovaná konstrukce je poměrně univerzální a mohla by najít využítí také jako manipulační robot.

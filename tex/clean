@@ -1,0 +1,2 @@
+#!/bin/bash
+rm -fv *.toc *.aux *.log *.out *.lof *.lot *.toa *~ text/*.aux text/*~
