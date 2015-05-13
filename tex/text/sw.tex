@@ -1,5 +1,98 @@
 \chapter{Řídící SW}
 
-Teoretické zázemí studentské práce vhodně rozdělené do částí.
+Řídící software pro osazovací automat byla nejtěžší část celého projektu. SW spojuje jednotlivé části popsané v předcházejících kapitolách do jednoho celku. 
 
-(Struktura navržená v této šabloně je nehrubší možná, po konzultaci s~vedoucím je vhodné zvolit přiléhavější.)
+
+
+Jeden z hlavních požadavků na řídící SW byla jeho platformová nezávislost. Tedy možnost spuštění aplikace jak na operačním systému Linux, tak i na Windows. Protože aplikace má grafické rozhraní, zúžil se výběr mnou známých programovacích jazyků na C/C++, Java, Delphi a Python. Byl vybrán  právě poslední zmiňovaný Python, jelikož má velice dobrou dokumentaci a nástroje pro tvorbu GUI jsou uživatelsky přívětivé.
+Tato kombinace slibovala rychlý prototyping SW a naději na funkční SW. Pro tvorbu GUI padla volba na PyQt.
+
+V aplikaci je kvůli centrování součástek a desek potřebné i vyhodnocování obrazu. Jako základ byla použita hojně používaná knihovna OpenCV. Ta nabízí set základních funkcí pro manipulaci s obrazem. Implementované funkce jako rozostření, hledání hran, kontur a kruhů zjednoduší úlohu rozpoznávání pozice a rotace součástek a hledání centrovacích bodů DPS.
+
+
+Screenshoty z QTGUI a pár věcí ohledně PyQt
+
+
+
+
+
+
+
+\section{Data pro osazovací automat}
+
+Pro návrh elektronických systémů se používá software spadající do kategorie EDA – Electronic Design Automation. Je to soubor nástrojů pro tvorbu desek plošných spojů (a integrovaných obvodů). Mezi základní nástroje patří Schématické editory, simulátory obvodů, autoroutery, návrhové prostředí pro tvorbu DPS a CAM procesor. 
+Příkladem EDA softwérů jsou: Altium Designer, KiCad, CadSoft Eagle.
+
+Pro testování byl použit poslední zmiňovaný CadSoft Eagle, který je ve své základní varianě pro nekomerční účely dostupný zdarma. Uvžujme vytvořené schéma a DPS. Pro osazovací automat potřebujeme získat pozici, hodnotu, typ pouzdra a rotaci každé SMD součástky, dále potřebujeme získat pozici centrovacích značek. K tomu se částečně dají použít jendak vestavěné funkce, Eagle ale disponuje i možností použití tzv ULP (User Language Program. ) skriptů. ULP je programovací jazyk postavený na základech C a umožňuje přímé modifikování schématu, DPS a vytváření různých exportů.
+
+
+Vestavěný export
+Jednou z cest jak vyexportovat pozice součástek je \verb|File->Export->Partlist|
+
+
+Výsledný export obsahuje všechny použité součástky a exportované pozice jsou v jednotkách mil. Pro osazovací automat je ale potřeba jen SMD součástek a centrovacích bodů. Tento export tedy není příliš vhodný, protože by potřeboval ještě následnou ruční úpravu spočívající minimálně v odmazání všech THD součástek
+
+
+\begin{table}[h!]
+  \caption{Ukázka exportu. }
+  \begin{center}
+  	\small
+	  \begin{tabular}{|c|c|c|c|c|c|}
+	    \hline
+	    Part	& Value 	& Package 	& Library 	& Position (mil) 	& orientation	\\
+	    \hline\hline
+
+		C1 	& .1uF		& C0603		& resistor	& (2860 300)		& R180		\\
+		\hline
+		C2 	& 18pF		& C0603		& rcl		& (2075 1405)		& R90		\\
+		\hline
+	    \hline
+	  \end{tabular}
+  \end{center}
+\end{table}
+
+Součástí instalace Eagle je i několik již připravených ULP skriptů pro export, například Centroid\_ScreamingCircuits\_smd.ulp
+Ten generuje oproti Partlistu strojově čitelnější formát a exportuje jen SMD součástky. Bohužel však chybí typ použitého pouzdra a hodnota součástky. 
+
+\begin{verbatim}
+  RefDes,Layer,LocationX,LocationY,Rotation
+  C1,Top,2.860,0.300,180
+  C2,Top,2.075,1.405,90
+\end{verbatim}
+
+Pro vytvoření exportu se všemi potřebnými hodnotami tak bylo potřeba napsat vlastní ULP skrip. 
+Ten exportuje středy/origins součástek tak, jak byly vytvořené autorem součástky v knihovnách, dále i geomterické středy součástek. Geomterický střed funguje tak, že se iteruje nad všemi ploškami součástky a hledá se minimum a maximum v obou osách. Jejich rozdíl se vydělí dvěma a najde se skutečný střed součástky. Není to tak střed součástky základě geometrického tvaru pouzdra! Na to je třeba brát později zřetel. Důvod pro export těchto souřadnic je ten, že né všechny součástky v knihovnách se drží zažitého standardu na umisťování středícího bodu do středu pouzdra, případně do levého horního rohu.
+
+Ukázka z ULP skriptu exportující informace o centrovacích bodech DPS
+
+\begin{verbatim}
+  printf("Part name;Package;Value;X origin;Y origin;\n");
+  printf("%%fiducials\n");
+  B.elements(E) if (E.populate) {
+
+    if (E.package.name == "FIDUCIAL_1MM") 
+         printf("%s;%s;%s;%.3f;%.3f;\n",
+         E.name, E.package.name, E.value, u2mm(E.x), u2mm(E.y));  
+
+
+  }
+  printf("%%end_fiducials\n");
+\end{verbatim}
+
+Výsledný export je pak ve formátu 
+\begin{verbatim}
+  %data
+  Part name;X center;Y center;X origin;Y origin;Rotation;Value;Package
+  C1;72.644;7.620;72.644;7.620;180;.1uF;C0603
+  C2;52.705;35.687;52.705;35.687;90;18pF;C0603
+  %data_end
+  %fiducials
+  Part name;Package;Value;X origin;Y origin;
+  U$3;FIDUCIAL_1MM;FIDUCIAL;7.500;3.000;
+  U$4;FIDUCIAL_1MM;FIDUCIAL;7.500;57.000;
+  U$6;FIDUCIAL_1MM;FIDUCIAL;92.500;3.000;
+  %fiducials_end
+\end{verbatim}
+
+skript také exportuje obrázek dané DPS, který se dá po načtení do řídícího SW použít pro simulaci osazování. Celý skript je přiložen v příloze B.
+
