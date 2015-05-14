@@ -409,8 +409,9 @@ class StartQT4(QtGui.QMainWindow):
 		#self.filename = fd.getOpenFileName()
 
 		#for debug purposes only
-		self.filename = 'demo2.mnt'
-			
+		#self.filename = 'demo2.mnt'
+		self.filename = 'base3D_mk2.mnt'
+	
 		from os.path import isfile
 		if isfile(self.filename):
 			data = 0
@@ -695,6 +696,9 @@ class StartQT4(QtGui.QMainWindow):
 		#self.devices.getPickPos(self.txtDeviceName.text())
 		self.devices.getPickPos2(self.txtDeviceName.text())
 
+	@QtCore.pyqtSlot()
+	def on_btnRepeatability_clicked(self):
+		self.machine.runRepeatability()
 
 class MyLabel(QtGui.QLabel):
     """A Label widget derived from QTextEdit and implementing its

@@ -142,7 +142,7 @@ VUTBR</string>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tab_6">
      <attribute name="title">
@@ -1212,6 +1212,32 @@ QGroupBox::title {
        <string>↓</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="btnRepeatability">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>310</y>
+        <width>201</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Perform repeatability test</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnAccuracy">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>350</y>
+        <width>201</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Perform accuracy test</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_10">
      <attribute name="title">
@@ -1454,8 +1480,6 @@ QGroupBox::title {
        <string>Real CCD image</string>
       </property>
      </widget>
-     <zorder>imgCCD2</zorder>
-     <zorder>tabWidget</zorder>
     </widget>
    </widget>
    <widget class="QListWidget" name="listTerminal">

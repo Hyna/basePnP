@@ -204,6 +204,112 @@ class Machine:
 			return None		
 
 
+	def runRepeatability(self):
+
+		self.goTo( (290, 290), 4000)
+		self.goTo( (150, 150), 4000)
+
+		image = self.mainWindow.core.getTopImage()
+		image.save('0.png', format=None, quality=-1)
+
+		self.goTo( (290, 290), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('1.png', format=None, quality=-1)
+
+
+		self.goTo( (290, 225), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('2.png', format=None, quality=-1)
+
+
+		self.goTo( (290, 150), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('3.png', format=None, quality=-1)
+
+
+		self.goTo( (290, 75), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('4.png', format=None, quality=-1)
+
+
+		self.goTo( (290, 10), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('5.png', format=None, quality=-1)
+
+
+		self.goTo( (225, 10), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('6.png', format=None, quality=-1)
+
+
+		self.goTo( (150, 10), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('7.png', format=None, quality=-1)
+
+
+		self.goTo( (75, 10), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('8.png', format=None, quality=-1)
+
+
+		self.goTo( (10, 10), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('9.png', format=None, quality=-1)
+
+
+		self.goTo( (10, 75), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('10.png', format=None, quality=-1)
+
+
+		self.goTo( (10, 150), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('11.png', format=None, quality=-1)
+
+
+		self.goTo( (10, 225), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('12.png', format=None, quality=-1)
+
+
+		self.goTo( (10, 290), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('13.png', format=None, quality=-1)
+
+
+		self.goTo( (75, 290), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('14.png', format=None, quality=-1)
+
+
+		self.goTo( (150, 290), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('15.png', format=None, quality=-1)
+
+
+		self.goTo( (225, 290), 4000)
+		self.goTo( (150, 150), 4000)
+		image = self.mainWindow.core.getTopImage()
+		image.save('16.png', format=None, quality=-1)
+
+
+		pass
+
 
 	def run(self):
 		if self.isQueueEmpty() is False:

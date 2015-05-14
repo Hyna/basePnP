@@ -127,7 +127,7 @@ V průběhu testování se ukázalo, že světelné podmínky mají velký vliv 
 
 Napsat komentář k přesnostem.
 
-Ukázka vlvivu osvětlení na detekci: Pro redukci šumu byl použit median filtr
+Ukázka vlivu osvětlení na detekci: Pro redukci šumu byl použit median filtr
 
 
 \begin{figure}[h!]
@@ -223,12 +223,6 @@ Dalším úkolem který vyžaduje vyhodnocování obrazu je hledání jednotliv�
     \label{fig:tape}
 \end{figure}
 
-\begin{figure}[h!]
-  \centering
-    \includegraphics[width=0.8\linewidth]{obrazky/tape.png}%
-    \caption{Páska.}
-    \label{fig:tape2}
-\end{figure}
 
 Pásky mají standardizované rozměry, na základě kterých lze součástky v nich obsažené zaměřit. Dle velikosti jsou součástky umístěny v páskách o šířce od 8mm až do 32 mm. Tabulka XXX uvádí standardní rozměry pásek dle katalogu výrobce OnSemi. 
 Námi použitý zásobník popsaný v kapitole XXX je statický, páska je v něm umístěna vždy paralelně ve směru osy X či Y. Pokud zaměříme střed první součástky v zásobníku a zároveň známe rozteč součástek P1, tak je snadné vypočítat pozici každé součástky. Bohužel kumulativní tolerance roztečí může dosáhnout až +- 0,2mm na deseti součástkách. Což při padesáti součástkách dává maximální chybu až 1mm. Jak bylo prakticky zjistěno, tato chyba je je v reálných podmínkách zanedbatelná. Toto řešení je tak pro navrhnutý statický zásobník plně použitelné. Nevýhodou ovšem je, že je zaměřena jen první součástka a pozice dalších je již vypočítána bez použitá kamery.  Nelze tak detekovat chybějící součástky v zásobníku viz následující obrázek. Zaměřena byla součástka po levé straně a ostatní byly dopočítány včetně čtvrté chybějící. Další nevýhodou je, že zásobník nemusí být umístěn ideálně paralelně s osou a i po přesném zaměření první součástky může u posledních součástek na druhé straně pásky najíždět vakuová pipeta mimo součástky. Na druhou stranu toto řešení zvyšuje osazovací rychlost, protože nad každou součástku nemusí najíždět kamera.
@@ -249,7 +243,7 @@ Součástky lze zaměřovat také na základě referenční předlohy/šablony. 
 \begin{figure}[h!]
   \centering
     \includegraphics[width=0.1\linewidth]{obrazky/template.png}%
-    \caption{Šblona pro detekci.}
+    \caption{Šablona pro detekci.}
     \label{fig:template}
 \end{figure}
 
@@ -271,7 +265,7 @@ Pro demonstraci byla použita jiná šablona, která už neobsahuje celý slot, 
     \label{fig:template2}
 \end{figure}
 
-Jak je vidět, tak nyní jsou již detekovány přesné pozice ce součástek a ne pozice jednotlivých slotů. To pak umožní nasátí součástky na střed vakuové pipety a zvýšení výsledné přesnosti osazování. Tedy za poředpokladu, že se nepoužije spodní centovací kamera. 
+Jak je vidět, tak nyní jsou již detekovány přesné pozice součástek a ne pozice jednotlivých slotů. To pak umožní nasátí součástky na střed vakuové pipety a zvýšení výsledné přesnosti osazování. Tedy za poředpokladu, že se nepoužije spodní centovací kamera. 
 \begin{figure}[h!]
   \centering
     \includegraphics[width=0.5\linewidth]{obrazky/res3.png}%

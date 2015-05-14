@@ -89,7 +89,7 @@ diploma						 % sazba diplomové práce
 %% Název práce:
 %  První parametr je název v originálním jazyce,
 %  druhý je překlad v angličtině nebo češtině (pokud je originální jazyk angličtina)
-\nazev{Název studentské práce}{Title of Student's Thesis}
+\nazev{Sekvenční osazování povrchově montovaných součástek}{Sequential Placement of Surface Mounted Devides}
 
 %% Jméno a příjmení autora ve tvaru
 %  [tituly před jménem]{Křestní}{Příjmení}[tituly za jménem]
@@ -97,17 +97,17 @@ diploma						 % sazba diplomové práce
 
 %% Jméno a příjmení vedoucího včetně titulů
 %  [tituly před jménem]{Křestní}{Příjmení}[tituly za jménem]
-\vedouci[prof.\ Ing.]{Křestní}{Starý}[CSc.]
+\vedouci[Ing.]{Jiří}{Starý}[Ph.D.]
 
 %% Označení oboru studia
 % První parametr je obor v originálním jazyce,
 % druhý parametr je překlad v angličtině nebo češtině
-\oborstudia{Mikroelektronika}{microelectronic}
+\oborstudia{Mikroelektronika}{Microelectronics}
 
 %% Označení ústavu
 % První parametr je název ústavu v originálním jazyce,
 % druhý parametr je překlad v angličtině nebo češtině
-\ustav{Ústav telekomunikací}{Department of Telecommunications} 
+\ustav{Ústav mikroelektroniky}{Department of Microelectronics} 
 
 %% Rok obhajoby
 \rok{2015}
@@ -126,7 +126,7 @@ diploma						 % sazba diplomové práce
 	{Překlad klíčových slov v~angličtině nebo češtině}
 
 %% Poděkování
-\podekovanitext{Rád bych poděkoval vedoucímu diplomové práce panu Ing.\ XXX, Ph.D.\ za odborné vedení, konzultace, trpělivost a podnětné návrhy k~práci.}
+\podekovanitext{Rád bych poděkoval vedoucímu diplomové práce panu Ing.\ Jiřímu Starému, Ph.D.\ za odborné vedení, konzultace, trpělivost a podnětné návrhy k~práci.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -152,20 +152,20 @@ diploma						 % sazba diplomové práce
 
 %% Vložení desek generovaných informačním systémem
 \includepdf[pages=1,offset=19mm 0mm]%
-  {pdf/student-desky}% název souboru nesmí obsahovat mezery!
+  {pdf/hs-desky}% název souboru nesmí obsahovat mezery!
 % nebo vytvoření desek z balíčku
 %\vytvorobalku
 \setcounter{page}{1} %resetovani citace stranek - desky se necisluji
 
 %% Vložení titulního listu generovaného informačním systémem
 \includepdf[pages=1,offset=19mm 0mm]%
-  {pdf/student-titulka}% název souboru nesmí obsahovat mezery!
+  {pdf/hs-titulka}% název souboru nesmí obsahovat mezery!
 % nebo vytvoření titulní stránky z balíčku
 %\vytvortitulku
    
 %% Vložení zadání generovaného informačním systémem
 \includepdf[pages=1,offset=19mm 0mm]%
-  {pdf/student-zadani}% název souboru nesmí obsahovat mezery!
+  {pdf/hs-zadani}% název souboru nesmí obsahovat mezery!
 % nebo lze vytvořit prázdný list příkazem ze šablony
 %\stranka{}%
 %	{\sffamily\Huge\centering ZDE VLOŽIT LIST ZADÁNÍ}%
@@ -198,6 +198,9 @@ diploma						 % sazba diplomové práce
 
 %% Vložení souboru 'text/konstrukce' s popisem reseni práce
 \include{text/konstrukce}
+
+%% Vložení souboru 'text/vacuum' s popisem reseni práce
+\include{text/vacuum}
 
 %% Vložení souboru 'text/reseni' s popisem reseni práce
 \include{text/obraz}

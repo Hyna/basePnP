@@ -76,7 +76,7 @@ Jelikož je osazovací automat koncipován spíše na prototypovou výrobu, př�
 Jako vhodný typ motorů připadaly v úvahu krokové motory a servo motory. Servo motory by dozajista byly lepší volbou pro svůj velký kroutící moment a uzavřenou smyčku řízení. Oproti krokovým motorům jsou ale náročnější na řízení a mají vyšší cenu.
 Volba tak padla na krokové motory u kterých je řízení jednodušší. Za použití driveru je lze ovládat jen pomocí signálu Krok a Směr (STEP a DIRECTION). Řízení je pak otevřenou smyčkou, krokový motor nemá žádnou zpětnou vazbu.
 
-Může řídit jen jen zátěž, která je v rozsahun na kterou byl dimenzován. V opačném případě dochází ke ztrátě kroku a tím i pozice.
+Může řídit jen zátěž, která je v rozsahun na kterou byl dimenzován. V opačném případě dochází ke ztrátě kroku a tím i pozice.
 
 U krokového motoru se vzrůstající rychlostí rotace klesá kroutící moment. Od jakých otáček dochází k poklesu je ale zavislé na napájecím napětí. To je názorně vidět na momentové charakteristice pro motor SX17-1005LQEF od české firmy Microcon. Právě tento motor byl do konstrukce použit.
 
@@ -110,7 +110,7 @@ Zvolený motor má krok 1.8° což odpovídá 200 krokům na otáčku. Na volbě
     \caption{DRV8825.}
 \end{figure}
 
-Jednoduchým výpočtem pak zjistíme, kolik kroků bude potřeba pro pohyb dané osy na jeden mm a teoretickou přesnost pozicování. Parametry kroky/mm je později použit na klaibraci os.
+Jednoduchým výpočtem pak zjistíme, kolik kroků bude potřeba pro pohyb dané osy na jeden mm a teoretickou přesnost pozicování. Parametr kroky/mm je později použit na klaibraci os.
  
 Použitý řemen GT2 má rozteč 2mm a řemenice má 20 zubů – viz kapitola o mechanické konstukci.
 Krok na mm = (kroků na otáčku * mikrokroky) / (rozteč zubů řemenu  * počet zubů řemenice)
@@ -172,7 +172,7 @@ Mikrokontrolér disponuje nativní podporu USB protokolu verze 2.0, nebylo tak n
 \end{figure}
 
 Na následujícím obrázku je vidět původní zapojení prototypu řídící elektroniky. Jak bylo řečeno, vychází z doporučeného zapojení od výrobce a bylo navíc doplněno o kondenzátory C4 a C5 pro potlačení rušení dle \cite{intel}. V průběhu testování a psaní řídícího SW se ale bez zjevné příčiny stávalo, že došlo k přerušení komunikace s mikrokontrolérem. První podezření bylo na zamrzající (je to spisovný?) firmware mikrokontroléru a jeho reset. Pro ověření této doměnky byl k desce připojen externí převodník USB na sériové rozhraní. Po zamrznutí USB rozhraní se ale dalo stále připojit externím převodníkem a komunikovat s mikrokontrolérem. Problém tedy byl jen se samotným nativním USB rozhraním. 
-První podezření na elektromagnetickou kmpatibilitu nastalo až při zapojování vakuové pumpy do rozvodné sítě. Deska reprodukovatelně přestávala komunikovat přes USB rozhraní. Měřením na osciloskopu se neprokázalo, že by se rušení šířilo vedením – napájecími kabely. 
+První podezření na elektromagnetickou kompatibilitu nastalo až při zapojování vakuové pumpy do rozvodné sítě. Deska reprodukovatelně přestávala komunikovat přes USB rozhraní. Měřením na osciloskopu se neprokázalo, že by se rušení šířilo vedením – napájecími kabely. 
 Jednalo se tedy o rušení indukované. Za použití nacvakávacích feritů byl identifikován jako hlavní zdroj rušení USB kabel. Při používání feritů je důležité umisťovat je co nejblíže koncům kabelů.
 Použitý propojovací USB kabel byl značky Goobay od Německého dodavatel a disponoval značkou CE. Rovněž použití jiných USB kabelů nepřinášelo bez feritu žádné zlepšení. 
 

@@ -47,16 +47,16 @@ Pokud se omezíme na základní principy přenosu rotačního pohybu motoru na l
 Šroubovicový systém pracuje na podobném principu jako matka (pohyblivá část) našroubovaná na závitové tyči (šroubovice). Rozdílem je ale větší stoupání a jiný profil závitu minimalizující tření, což zvyšuje účinnost převodu. Takovým příkladem je trapézová štoubovice. Mnohem přesnější variantou je pak kuličková šroubovice. Místo závitu jsou v matce kuličky, které v ní recilkurují. Účinnos převodu je tak ješte vyšší než u trapézového šroubu. Při změně směru otáčení mají ale obě varianty tzv mrtvý chod. Tuto hysterezi je možné eliminovat použitím předepnutých matek matic.
 Spojení šroubovice s motorem musí být přes pružnou spojku, aby se eliminovala chyba souososti.
 
-Využití řemenů 
+%Využití řemenů 
 Řešení s řemeny je koncipováno tak, že přímo na hřídel motoru je přidělána řemenice. Druhá řemenice (nebo ložisko) je umístěna na opačném konci osy a mezi nimi je natažen uzavřený řemen.
-Při správné volbě profilu řemenu je mrtvý chod zanedbatelný. Při velké délce řemenů může při jejich zatížení docházet k negativnímu propínání řemenů. Protot jsou řemeny vyztužovány tkaninou, nebo ocelovými dráty.
+Při správné volbě profilu řemenu je mrtvý chod zanedbatelný. Při velké délce řemenů může při jejich zatížení docházet k negativnímu propínání řemenů. Proto jsou řemeny vyztužovány tkaninou, nebo ocelovými dráty.
 
-Použití řemenů výrazně zjednodušuje a zlevňuje celou konstrukci, proto byly do konstrukce zvoleny právě řemeny. Konkrétně řemen s profilem GT2, který je určen právě do aplikací s lineárním pohybem. Tvar zubu je zakulacený pro potlačení mrtvého chodu viz následující obrázek.
+Použití řemenů výrazně zjednodušuje a zlevňuje celou konstrukci, proto byly do konstrukce zvoleny řemeny. Konkrétně řemen s profilem GT2, který je určen právě do aplikací s lineárním pohybem. Tvar zubu je zakulacený pro potlačení mrtvého chodu viz následující obrázek.
 
 
 \section{Uspořádání os X a Y}
 
-V předchozích kapitolách byly na základě úvah o přesnosti zařízení zvoleny pojezdy tvořené lineárním vedením poháněné řemeny. V této kapitole bude popsaná problematika uspořádání jednotlibých os.
+V předchozích kapitolách byly na základě úvah o přesnosti zařízení zvoleny pojezdy tvořené lineárním vedením poháněné řemeny. V této kapitole bude popsaná problematika uspořádání jednotlivých os.
 
 Samotný polohovací systém osazovacího automatu pracuje v kartézském souřadnicovém systému.  Z konstrukčního hlediska bylo několik možností jak systém řešit. Základní konstrukční princip je, že každá osa má svůj vlastní motor (nebo více motorů), který ji pohání. Portálová konstrukce našeho osazovacího automatu by tak mohla vypadat dle následujícího obrázku.
 
@@ -68,7 +68,7 @@ Samotný polohovací systém osazovacího automatu pracuje v kartézském souřa
 \end{figure}
 
 
-V případě použití jendnoho motoru pro osu Y by bylo nutné spřažení pravé a levé části portálu, aby nedocházelo k nežádoucí rotaci při hnaní jen jedné části portálu. Alternativou by bylo na každou stranu portálu dát jeden motor a jejich otáčky řídit synchroně. 
+V případě použití jednoho motoru pro osu Y by bylo nutné spřažení pravé a levé části portálu, aby nedocházelo k nežádoucí rotaci při hnaní jen jedné části portálu. Alternativou by bylo na každou stranu portálu dát jeden motor a jejich otáčky řídit synchroně. 
 Osa X by měla po boku vlastní motor a celá by byla uložená na ose Y. Tzn s pohybem v ose Y by se pohybovala i celá váha osy X. Na ose X je navíc ještě umístěna osa Z s vakuovou pipetou což je další hmota navíc. Dá se očekávat, že dynamické vlastnosti, rychlost a kompaktnost tohoto řešení nebude pro osazovací automat ideální (za předpokladu použití dostupných komponent).
 
 
@@ -80,11 +80,6 @@ Zajímavým uspořádáním, které úplně eliminuje nutnost aby se motor X poh
 
 
 
-
-
-\subsection{CoreXY}
-Výše zmíněné nevýhoda systému H-bot jde eliminovat podobným, avšak mírně komplikovanějším uspořádáním zvaným coreXY. 
-
 \begin{figure}[h!]
   \centering
     \includegraphics[width=0.6\linewidth]{obrazky/Hbot.png}%
@@ -94,7 +89,6 @@ Výše zmíněné nevýhoda systému H-bot jde eliminovat podobným, avšak mír
 
 Nevýhodou tohoto uspořádání je fakt, že síly působící na pohyblivý portál jsou v opačném směru což může vést k jeho mírné rotaci. Na obrázku je naznačen pohyb v pozitivním směru osy X, motor A i motor B se točí na stejnou stranu. Do obrázku byly naznačeny tahové a tlakové síly (zelená a modrá šipka), které by se měli v ideálním případě navzájem vyrušit. V reálném světě tomu tak není a portál má tendenci rotovat ve směru zelených šipek.
  S tímto systémem se tak dá dosahovat precizního polohování jen za předpokladu použití dostatečně tuhé konstrukce.
-
 
 
 
@@ -110,4 +104,66 @@ Výše zmíněné nevýhoda systému H-bot jde eliminovat podobným, avšak mír
 \end{figure}
 
 Jak je vidět z obrázku, síly působící na portál působí oproti H bot již v jednom směru a nedochází tak k nechtěné rotaci portálu. 
+
+
+\section{Zásobníky na součástky}
+Jedním z požadavků zadání práce je možnost odebírání součástek z dvaceti 8mm zásobníků. Kde každý zásobník musí obsahovat minimálně 20 součástek o velikosti 0805. Při návrhu designu zásobníků byl kladen důraz na univerzálnost, tedy nejen možnost zavedení 8mm pásky, ale i jiných rozměrů.
+
+Návrh tak vychází z tabulky XXX, kde je uvedena specifikace rozměrů pro jednotlivé šířky pásek od výrobce OnSemiconductors. Kde parametr K udává maximální výšku součástky. Aby byl zásobník univerzální, musí být schopný pojmout pásku o šířce 8-24 mm s minimální výškou 11,9mm.
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/tape.png}%
+    \caption{Páska.}
+    \label{fig:tape2}
+\end{figure}
+
+
+\begin{table}[h!]
+  \caption{Rozměry pásek}
+  \begin{center}
+  	\small
+	  \begin{tabular}{|c|c|c|c|c|c|c|c|}
+	    \hline
+	    Šířka pásky	& D [mm]	& K [mm]	& P0 [mm]	& P2 [mm]	& E [mm]	& F [mm]	& B [mm]	\\
+	    \hline\hline
+		8 mm	& 1,5		& 2.4		& 4,0		& 2.0		& 1,75		& 3,5		& 4,55		\\
+	    	\hline
+		12 mm	& 1,5		& 6.4		& 4,0		& 2.0		& 1,75		& 5,5		& 8,2		\\
+	    	\hline
+		16 mm	& 1,5		& 7.9		& 4,0		& 2.0		& 1,75		& 7,5		& 12,1		\\
+	    	\hline
+		24 mm	& 1,5		& 11.9		& 4,0		& 2.0		& 1,75		& 11,5		& 20,1		\\
+	    	\hline
+	  \end{tabular}
+  \end{center}
+\end{table}
+
+Byl proto navržen modulový systém zásobníku, který má variabilní šířku a na výšku je schopen pojmout 12mm vysoké součástky. Schématické znázornění zásobníku je na následujícím obrázku. Jednotlivé moduly zásobníku byly vytištěny z plastu za pomocí 3D tiskárny. Z obavy z možných problémů s ESD byl pro jistotu použit ABS materiál s přídavkem uhlíku, který omezuje statický náboj.
+
+Předpokladem je používání jen ústřižků pásek se součástkami. U frekventovaně používaných součástek jako jsou odpory 10k, kondenzátory 100nF a dalších by byla neustálá příprava ústřižků pasky zbytečně zdlouhavá. Proto byla přidána možnost založení celé role ke každému zásobníku.  
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics{obrazky/zasobnik.png}%
+    \caption{Zásobník.}
+    \label{fig:zasobnik}
+\end{figure}
+
+
+
+Výsledné provedení 
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.85\linewidth]{obrazky/zasobniky.jpg}%
+    \caption{Zásobník.}
+    \label{fig:zasobniky}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.85\linewidth]{obrazky/role.jpg}%
+    \caption{Zásobník.}
+    \label{fig:role}
+\end{figure}
 

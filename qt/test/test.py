@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created: Mon Apr 13 20:21:50 2015
+# Created: Wed May 13 22:33:51 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -372,6 +372,12 @@ class Ui_MainWindow(object):
         font.setWeight(50)
         self.btnMoveYn1.setFont(font)
         self.btnMoveYn1.setObjectName(_fromUtf8("btnMoveYn1"))
+        self.btnRepeatability = QtGui.QPushButton(self.tab_2)
+        self.btnRepeatability.setGeometry(QtCore.QRect(20, 310, 201, 31))
+        self.btnRepeatability.setObjectName(_fromUtf8("btnRepeatability"))
+        self.btnAccuracy = QtGui.QPushButton(self.tab_2)
+        self.btnAccuracy.setGeometry(QtCore.QRect(20, 350, 201, 31))
+        self.btnAccuracy.setObjectName(_fromUtf8("btnAccuracy"))
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
         self.tab_10 = QtGui.QWidget()
         self.tab_10.setObjectName(_fromUtf8("tab_10"))
@@ -476,7 +482,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusBar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(4)
+        self.tabWidget.setCurrentIndex(3)
         self.tabWidget_3.setCurrentIndex(1)
         self.tabWidget_2.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -566,6 +572,8 @@ class Ui_MainWindow(object):
         self.btnMoveYp1.setText(_translate("MainWindow", "↑", None))
         self.btnMoveXn1.setText(_translate("MainWindow", "←", None))
         self.btnMoveYn1.setText(_translate("MainWindow", "↓", None))
+        self.btnRepeatability.setText(_translate("MainWindow", "Perform repeatability test", None))
+        self.btnAccuracy.setText(_translate("MainWindow", "Perform accuracy test", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Motion", None))
         self.btnVacOpen.setText(_translate("MainWindow", "Open valve", None))
         self.btnVacClose.setText(_translate("MainWindow", "Close valve", None))
