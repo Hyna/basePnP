@@ -11,6 +11,11 @@ V aplikaci je kvůli centrování součástek a desek potřebné i vyhodnocován
 
 
 Screenshoty z QTGUI a pár věcí ohledně PyQt
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=1\linewidth]{obrazky/pyqt.png}%
+    \caption{Vývojové prostředí PyQt pro tvorbu grafického rozhraní.}
+\end{figure}
 
 
 
@@ -96,3 +101,108 @@ Výsledný export je pak ve formátu
 
 skript také exportuje obrázek dané DPS, který se dá po načtení do řídícího SW použít pro simulaci osazování. Celý skript je přiložen v příloze B.
 
+
+
+\section{Workflow}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=1\linewidth]{obrazky/workflow.png}%
+    \caption{Workflow.}
+\end{figure}
+
+\section{Program}
+
+Mimo grafické rozhraní je součástí aplikace i terminál, ve kterém jsou logovány prováděné operace. Do terminálu se vypisují i návratové hodnoty z jednotlivých funkcí programu, hodí se tak pro odhalování případných problémů s aplikací.
+
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=1\linewidth]{obrazky/sw.png}%
+    \caption{Hlavní obrazovka řídícího SW.}
+\end{figure}
+
+
+\subsection{CAD data a přiřazení zásobniků}
+Po načtení CAD dat vyexportovaných z Eagle (tlačítko Load PnP data) jsou všechny součástky vylistovány do tabulky placement data. U každé položky v tabulce jsou uvedeny všechny potřebné data k jejímu osazení. Navíc pokud je již zarovnaná DPS, pomocí dvojkliku myší automat dojede s kamerou nad místo, kde má být součástka osazena a automaticky vytvoří náhledový snímek z horní CCD kamery.
+Součástky stejného druhu (pouzdro|hodnota) jsou sdruženy v tabulce Items for palacement. U každého druhu součástek se zde přiřazuje příslušný zásobník, ze kterého budou součástky odebírány. Pomocí checkboxů lze volit, jestli bude daná součástka, nebo cellá skupina součástek osazována. Jak je vidět na obrázku, kondenzátor C3 nebude tak osazen.
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/sw7.png}%
+    \caption{Tabulka všech součástek a sdružené součástky podle pouzder a hodnoty.}
+\end{figure}
+
+\subsection{Zaměření DPS}
+Pro přesné zaměření pozice DPS byly implementovány 3 centrovací algoritmy. V průběhu výroby DPS můžou vznikat různé chyby, které se ve výsledku porojeví v přesnosti osazování. Může se jednat o chybu měřítka, rotaci motivu vůči fyzickým rozměrům DPS a další. Obzvlášť znatelné jsou tyto chyby při podomácku vytvářených DPS. Další chyby můžou nastat při nepřesném uložení DPS do osazovacího automatu.
+
+Základním zaměřovacím algoritmem je mód Simple - ten nepoužívá zádné vyhodnocování obrazu. DPS se umístí na dorazy, kdy jeden z jejích rohů je v souřadnici 0,0 (v souřadnicovém systému v prostoru pro DPS, ne v souřadnicovém systému celého stroje). Tato metoda je nejméně přesná, protože není schopna kompenzovat žádné chyby. Přesnost osazování v tomto módu tak závisí na preciznosti vycentrování DPS a její kvalitě.
+jediná výhoda tohot módu je možnost osazovat i DPS, které nedisponují centrovacími značkami.
+
+Nejužitečnější je plně automatický mód, který centruje DPS pomocí centrovacích značek (viz kapitola o vyhodnocování obrazu). Dokáže tak kompenzovat všechny výše popsané chyby. DPS je stejně jak v předchozím případě umístěna rohem do pozice 0,0. Princip spočívá v tom, že automat postupně najíždí nad centrovací značky a zjišťuje jejich skutečnou pozici vůči souřadnicovému systému automatu. Poté jsou všechny souřadnice součástek na DPS transformovány do nového souřadnicového systému. 
+
+Posledním centrovací metodou je poloautomatický mód. Ten umožňuje zaměření DPS libovolně umístěné v pracovním prostoru. Má všechny výhody plně automatického módu jen s počáteční nutností najet nad každou z centrovacích značek ručně.
+
+TODO, obrázek s naznačením jednotlivých metod.
+
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/sw4.png}%
+    \caption{Záložka s centrováním DPS.}
+\end{figure}
+
+\subsection{Manažer zásobníků}
+
+V manažeru zásobníků je monžné vytvážet a editovat jednotlivé zásobníky. V průběhu psaní diplomové práce byla implementována jen možnost statického zásobníku\cite{fig:xxx}, SW je ale připraven pro různé typy zásobníků jako plata a tuby. statický zásobník má následující možosti nastavení:
+
+\begin{itemize}
+\item Rozteč součástek v pásce - parametr P1 z obrázku  \cite{fig:tape2}
+\item Orientace pásky - jakým směrem jsou orientovány součástky vůči první referenční součástce
+\item Počet součástek na pásce
+\item Index aktuální součástky - inkrementuje se po každé odebrané součástce
+\item Použít vyhodnocování obrazu - kontrola přítomnosti součástky na základě metody z SW XXXX
+\item Vacuum test - Kontrola přítomnosti součástky na základě metody z VACUUM XXXX
+\end{itemize}
+
+Po nastavení těchto parametrů je potřeba zaměřit první součástku v zásobníků pomocí kamery a uložit tlačítkem Save. V tuto chvíli je zásobník připraven k použití.
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.48\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{obrazky/sw3.png}%
+		\caption{AAAA.}
+		\label{fig:denni}
+	\end{subfigure}
+	~
+	\begin{subfigure}[b]{0.48\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{obrazky/sw2.png}%
+		\caption{BBBB.}
+		\label{fig:denni2}
+	\end{subfigure}
+
+	\caption{Manažer zásobníků.}
+\end{figure}
+
+
+\subsection{Ovládání pohybu automatu}
+Pro manuální pohyb s osazovací hlavou slouží záložka motion. Pomocí šipek tak lze pohybovat s hlavou po krocích 0.1mm, 1mm a 10mm. V ose Z je krok 1mm a pro rotaci byl implementován krok 1 STUPEŇ.
+Tlačítko 0 automaticky nastaví kameru na souřadnici 0,0 v pracovním prostoru pro DPS.
+
+Součástí této záložky jsou i skripty na měření přesnosti a reprodukovatelnosti.
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/sw5.png}%
+    \caption{Motion záložka.}
+\end{figure}
+
+
+\subsection{Vacuum}
+Záložka pro monitorování aktuálního stavu tlaku v potrubí. Pomocí tlačítek Open/Close valve lze manuálně ovládat vakuový ventil. 
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/sw6.png}%
+    \caption{Vacuum záložka.}
+\end{figure}
+ 
