@@ -236,7 +236,8 @@ Námi použitý zásobník popsaný v kapitole XXX je statický, páska je v ně
 
 Každá páska má po straně děrování, které v profesionálních osazovacích automatech slouží k motorizovanému posunu pásky. V našem zásobníku je ale páska umístěna staticky bez možnosti posunu. Děrování má standardní rozteč P0 = 4mm a můžeme tak být použito jako reference. Při použití Houghova algoritmu jako na centrovacích značkách tak lze detekovat přesnou pozici děrování. Při identifikaci každé díry jako reference k přesné pozici součástky lze eliminovat chybu rotace pásky popsanou v předchozí mětodě.
 
-Dtekce za pomocí předlohy
+\section{Detekce za pomocí předlohy} \label{template}
+
 
 Součástky lze zaměřovat také na základě referenční předlohy/šablony. Ke každému typu součástky je nutné vytvořit vlastní předlohu viz následující obrázek.
 
@@ -272,4 +273,116 @@ Jak je vidět, tak nyní jsou již detekovány přesné pozice součástek a ne 
     \caption{Detekce XXXXX.}
     \label{fig:tape4}
 \end{figure}
+
+
+\section{Centrování součástek spodní kamerou}
+Největší přesnost osazování se dá dosáhnout po korekci pocice součástky již nasáté na trysce. K tomu je potřeba spodní pohled na součástku. Opět jsou zde možné dvě strategie k vyhodocování obrazu. A to založené na porovnávání obrazu s referenční šablonou a nebo hledání pomocí specifických rYsů v obraze. Jak bylo uvedeno v kapitole \ref{template}, tak metoda za použití šablony je přesnější. Oproti hledání součástek v zásobnících potřebujeme ovšem korigovat i rotaci součástky. Bohužel to je za pomocí šablony výpočetně velice náročná operace. Je potřeba hledat korelaci mezi obrázky pro každý stupeň rotace zvlášť a poté vybrat největší shodu. Pokud bychom počítali s teoretickou rotací součástky mezi 0-360 DEG, a hledali bychom s přesností na 10 minut, dostáváme se na číslo 2160. Což je oproti řešení bez korekce rotace značný rozdíl.
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.4\linewidth]{obrazky/vis_0.png}%
+    \caption{Vis0.}
+    \label{fig:vis0}
+
+\end{figure}
+
+Z tohoto důvodu byla šablonová metoda zavržena a byla realizována detekce pomocí rysů v obraze. Na obrázku \ref{fig:vis0} je snímek rezistoru o velikosti 0806 ze spodní kamery. Jak je vidět, je zaostřeno na součástku a pozadí je rozostřené. Právě na tom byla detekce založena. Nejprve bylo zapotřebí  najít všechny rohy, tedy rysy s hranou o úhlu 90 STUPŇU. K tomuto účelu byl použit Harris rohový detektor, jehož výstup je na obrázku \ref{fig:vis1}
+
+
+
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.4\linewidth]{obrazky/vis_1.png}%
+    \caption{Vis0.}
+    \label{fig:vis1}
+\end{figure}
+
+Dle předpokladu bylo detekováno největší množství rohů v zaostřené části. Dle odstínu šedi jsou odstupňovány rohy podle stupňě nejistoty. U bílích pixelů se jedná s největší pravděpodobností o rohy, kdežto šedá směrem k černé značí rohy nalezené s nejmenší jistotou.  Z obrázku to sice není patrné, ale v rozostřené oblasti bylo i tak detekováno značné množství rohů. Proto před dalším zpracováním musel být na výstup aplikován práh, který odfiltruje detekované rohy s nejistotou. Jako spolehlivé se ukázalo nastavení prahové hodnoty na 99.5 procenta shody. Výstup je na obrázku \ref{fig:vis2}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.4\linewidth]{obrazky/vis_2.png}%
+    \caption{Vis2.}
+    \label{fig:vis2}
+\end{figure}
+
+V tuto chvíli již máme pole rohů, které z velké části odpovídají obrysům součástky. Nezbývá tedy než najít geometrický střed součástky a její rotaci. Pro tuto operaci disponuje OpenCV metodou boundingRectangle, která obklopí pole bodů nejmenším možným obdélníkem. Tím již získáme rohové souřadnice hledaného rezistoru. Z nich pak vypočítáme rotaci a geometrický střed součástky.
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.4\linewidth]{obrazky/vis_3.png}%
+    \caption{Vis3.}
+    \label{fig:vis3}
+\end{figure}
+
+\section{výsledky}
+
+
+
+
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.48\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{obrazky/rot_before2.png}%
+		\caption{AAAA, rotace: -7,46\textdegree.}
+		\label{fig:rotBefore}
+	\end{subfigure}
+	~
+	\begin{subfigure}[b]{0.48\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{obrazky/rot_after2.png}%
+		\caption{BBBB, rotace: 0,0\textdegree.}
+		\label{fig:rotAfter}
+	\end{subfigure}
+
+	\caption{Rezistor o velikosti 0806 před a po korekci rotace.}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Výsledný algoritmus spolehlivě i detekuji i jiné druhy pouzder.
+
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.48\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{obrazky/D2pack2.png}%
+		\caption{D2-pak, rotace: -35,53\textdegree.}
+		\label{fig:rotD2}
+	\end{subfigure}
+	~
+	\begin{subfigure}[b]{0.48\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{obrazky/IC.png}%
+		\caption{LQFP100, rotace: -43,94\textdegree.}
+		\label{fig:rotIC}
+	\end{subfigure}
+
+	\caption{Ukázka algoritmu na pouzdrech D2-pak a LQFP100.}
+\end{figure}
+
+
+
+
 
