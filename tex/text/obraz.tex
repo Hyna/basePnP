@@ -2,40 +2,40 @@
 
 Pro dosažení co nejvyšší osazovací přěsnosti je zapotřebí přesně zaměřit a vycentrovat osazovanou DPS a stejně tak osazované součástky. K tomuto účelu byl automat vybaven dvěma CCD kamerami. Jedna umístěná na pohyblivém portálu s pohledem na součástky shora (dále horní kamera). Druhá kamera je umístěna staticky v pracovním prostoru a je s pohledem na spodní stranu součástek (dále spodní kamera). Horní kamera má za úkol zaměření osazované DPS a zaměření jednotlivých součástek v zásobnících. Hlavní funkcí spodní kamery je pak finální zcentrování již nasátých součástek na vakuové pipetě.  
 
-Alternativou k použití CCD kamer je laserové zaměřování. Pro zaměření DPS se využívá laserový kříž, se kterým se zaměří hrana desky. K centrování součástek se pak používá detektor pracující na principu laserové závory, který je umístěn přímo u pohyblivé osazovací hlavy. Oproti použití CCD kamer to má tedy výhodu, že součástka se může centrovat v mezičase kdy se pohybuje od zásobníku k cílové pozici. To u použití statické CCD kamery není možné a součástka tak musí putovat od zásobníku nad spodní kameru a až poté na cílové místo. S použitím laserového centrování tak lze dosáhnout vyšších osazovacích rychlostí. Další výhodou je schopnost detekovat tombstoning součástky případně její boční nasátí, s čímž si řešení na základě vyhodnocování obrazu ne vždy dokáže poradit. Navíc laserové sensory mají mnohem větší rozlišení než CCD sensory a dokáží tak spolehlivě centrovat i součástky o velikostech 01005. Například u námi použité spodní kamery vychází šířka součástky 01005 v obraze pod XXX pixely. To v případě vyhodnocování obrazu z CCD kamery nestačí ani na vycentrování součástky, natož pro kompenzaci chyby rotace. 
+Alternativou k použití CCD kamer je laserové zaměřování. Pro zaměření DPS se využívá laserový kříž, se kterým se zaměří hrana desky. K centrování součástek se pak používá detektor pracující na principu laserové závory, který je umístěn přímo u pohyblivé osazovací hlavy. Oproti použití CCD kamer to má tedy výhodu, že součástka se může centrovat v mezičase kdy se pohybuje od zásobníku k cílové pozici. To u použití statické CCD kamery není možné a součástka tak musí putovat od zásobníku nad spodní kameru a až poté na cílové místo. S použitím laserového centrování tak lze dosáhnout vyšších osazovacích rychlostí. Další výhodou laseru je schopnost detekovat tombstoning součástky případně její boční nasátí, s čímž si řešení na základě vyhodnocování obrazu ne vždy dokáže poradit. Navíc laserové sensory mají mnohem větší rozlišení než CCD sensory a dokáží tak spolehlivě centrovat i součástky o velikostech 01005. Například u námi použité spodní kamery vychází šířka součástky 01005 v obraze pod 5 pixelů. To v případě vyhodnocování obrazu z CCD kamery nestačí ani na vycentrování součástky, natož pro kompenzaci chyby rotace. 
 
 Tuhle pasáž je potřeba podložit referencí a obrázkem.
 
 \section{Použité zobrazovací jednotky - CCD kamery}
-Jako horní kamera byla použita webkamera Genius s rozlišením 640x480 pixelů. Webkamery mají široké zorné pole, proto musel být jeji objektiv nahrazen za jiný s užším zorným polem.  Nejfrekventovanější operací k čemu je obraz z kamery využíván je hledání 1mm kruhových obrazců (centrovací značky a děrování na páskách ze součástkami). Obraz z webkamery je tak sice slabé kvality s velkým obsahem šumu ale k danému účelu plně dostačující. 
+Jako horní kamera byla použita webkamera Genius s rozlišením 640x480 pixelů. Webkamery mají široké zorné pole se značným zkreslením po stranách, proto musel být jeji objektiv nahrazen za jiný s užším zorným polem.  Nejfrekventovanější operací k čemu je obraz z kamery využíván je hledání 1mm kruhových obrazců (centrovací značky a děrování na páskách ze součástkami). Obraz z webkamery je tak sice slabé kvality s velkým obsahem šumu ale k danému účelu plně dostačující. 
 
-Pokud by se součástky centrovaly již horní kamerou, zanášely by se následující chyby:
+Pokud by se součástky centrovaly jen horní kamerou, zanášely by se do přesnosti osazování následující chyby:
 Házivost vakuové pipety – Pokud by pipeta byla vyosená zanášela by se chyba při rotaci součástky.
 Úskok součástky při nasávání na vakuovou pipetu – vlivem sání má součástka při nasávání tendenci k poybu.
 Spodní kamera tak hraje klíčovou roli ve výsledné přesnosti osazení součástky, protože součástka je již na pevně dané pozici na vakuové pipetě. 
-Z toho důvodu je kvalita obrazu mnohem důležitější než u horní kamery.  Experimentálně bylo použito stejné webkamery jako pro horní kameru. Při dané ohniskové vzdálenosti vycházela pro součástky o velikosti 0402 šířka hrany pouhý jeden pixel. Pro spolehlivou detekci hran a kontur součástek byla tak tato hodnota nedostačující. Z toho důvodu byla webkamera nahrazena průmyslovým řešením. A to průmyslovou CCD kamerou Neměcké výroby od firmy iDS Imaging Development Systems. Konkrétně typem USB 2 uEye LE. Kamera má excelentní rozlišení 5MPixelů, tzn rozlišení 2650x1920 a velice nízký šum. Bohužel tomu i odpovídala cena, která se pohybovala v řádech tisíců. Kamera byla v základu bez objektivu, ten musel být přikoupen dodatečně.
+Z toho důvodu je kvalita obrazu mnohem důležitější než u horní kamery.  Experimentálně bylo použito stejné webkamery jako pro horní kameru. Při dané ohniskové vzdálenosti vycházela pro součástky o velikosti 0402 šířka hrany pouhý jeden pixel. Pro spolehlivou a přesnou detekci hran a kontur součástek byla tato hodnota nedostačující. Z toho důvodu byla webkamera nahrazena průmyslovým řešením. A to průmyslovou CCD kamerou Neměcké výroby od firmy iDS Imaging Development Systems. Konkrétně typem USB 2 uEye LE. Kamera má excelentní rozlišení 5MPixelů, tzn rozlišení 2650x1920 a velice nízký šum. Bohužel tomu i odpovídala cena, která se pohybovala v řádech tisíců. Kamera byla v základu bez objektivu, ten musel být přikoupen dodatečně.
 
 
 \section{Vyhlazování obrazu a redukce šumu}
-Ideálním vstupním obrázkem pro spolehlivé vyhodnocování obrazu je snímek bez jakéhokoliv šumu a s homogením osvětlením. To je ovšem v reálných pracovních podmínkách těžko realizovatelné. Proto je zapotřebí postprocesing každého snímku k odstranění všech negativních vlivů.
+Ideálním vstupním obrázkem pro spolehlivé vyhodnocování obrazu je snímek bez jakéhokoliv šumu a s homogením osvětlením. To je ovšem v reálných pracovních podmínkách těžko realizovatelné. Proto je zapotřebí postprocessing každého snímku k odstranění všech negativních vlivů.
 
 
-První operací po sejmutí obrázku z kamery je redukce šumu. Zjednodušeně se dá řící, že redukce šumu je prováděna rozmazáváním obrazu. To má však za následek i nežádoucí rozmazávání hran, které jsou pro rozpoznávání obrazu klíčové. Rozostření obrazu lze realizovat přímo pomocí čočky na kameře (změnou ohniskové vzdálenosti), tím ale zbytečně ztrácíme obrazovou informaci – hrany, které nám pak budou při vyhodnocování obrazu chybět. Lepší variantou je tak realizovat redukci šumu pomocí SW algoritmů na co nejostřejším obrázku. Tato strategie pak byla pro vyhodocování obrazu použita. Na obrázku XXX1 je vidět originální snímek centrovací značky z horní kamery. Pro demonstraci je záměrně podbarvený aby vinikly všechny rušivé elementy. Na snímek byl pak aplikován vyhledávací algoritmus (popsaný v následující kapitole) jehož výsledek je vidět na obrázku XXX3.  Je zcela evidentní, že vyhledávací algoritmus selhal a nenašel přesný střed  centrovací značky. Na originální obrázek pak byly použity jednotlivé typy vyhlazovacích filtrů a znovu aplikován vyhledávací algoritmus. 
+První operací po sejmutí snímku z kamery je redukce šumu. Zjednodušeně se dá řící, že redukce šumu je prováděna rozmazáváním obrazu. To má však za následek i nežádoucí rozmazávání hran, které jsou pro rozpoznávání obrazu klíčové. Rozostření obrazu lze realizovat přímo pomocí čočky na kameře (změnou ohniskové vzdálenosti), tím ale zbytečně ztrácíme obrazovou informaci – hrany, které nám pak budou při vyhodnocování obrazu chybět. Lepší variantou je tak realizovat redukci šumu pomocí SW algoritmů na co nejostřejším obrázku. Tato strategie pak byla pro vyhodocování obrazu použita. Na obrázku \ref{fig:blur}-1 je vidět originální snímek centrovací značky z horní kamery. Pro demonstraci je záměrně podbarvený aby vinikly všechny rušivé elementy. Na snímek byl pak aplikován vyhledávací algoritmus (popsaný v následující kapitole) jehož výsledek je vidět na obrázku \ref{fig:blur}-3.  Je zcela evidentní, že vyhledávací algoritmus selhal a nenašel přesný střed  centrovací značky. Na originální snímek pak byly použity jednotlivé typy vyhlazovacích filtrů a znovu aplikován vyhledávací algoritmus. 
 
 \subsection{Vyhlazovací filtr Blur}
 
 Je to základní lineární filtr. Vstupní snímek si můžem představit jako matici A o rozměrech j,k. V našem případě 85 x 85 pixelů, kde každý pixel má přiřazenou svoji hodnotu. Dále si představme matici B, jinak nazývanou jádro o libovolném rozměru (v našem případě byla použita matice o rozměru 3x3). Algoritmus Blur filtru pak pro každý pixel vstupního obrázku vynásobí daný pixel a jeho okolí jádrem. Výsledná hodnota daného pixelu je pak průměrnou hodnotou všech pixelů z vzniklé matice. Velikost jádra ovlivňuje vlastnosti filtru. Pokud je jádro příliš malé, je filtrace obrazu minimální. Při rozměrném jádru pak zase dochází k úplné ztrátě jemných detailů.
-Je důležité zmínit, že výsledný snímek z filtru je zcela novou maticí. Hodnota daného pixelu a jeho okolí je totiž vždy brána z originálního snímku, který se tak v průběhu výpočtu nesmí měnit.
+Je důležité zmínit, že výsledný snímek z filtru je zcela novou maticí. Hodnota daného pixelu a jeho okolí je totiž vždy brána z originálního snímku, který se v průběhu výpočtu nesmí měnit.
        | 1 1 1 |
 B = | 1 1 1 |
        | 1 1 1 |
 
 Tento základní princip slouží i pro jiné typy filtrů, stačí jen upravit matici jádra může vzniknout pro příklad hranový detektor, zvýrazňovač reliéfu atd.
 
-\begin{figure}[h!]
+\begin{figure}[H]
   \centering
     \includegraphics[width=0.8\linewidth]{obrazky/blur.png}%
-    \caption{Blur.}
+    \caption{Filtr Blur.}
     \label{fig:blur}
 \end{figure}
 
@@ -44,18 +44,18 @@ U obrázků je pro orientaci vždy uveden i souřadnicový systém v pixelech.
 
 \subsection{Vyhlazovací filtr Gaussian Blur}
 Pracuje podobně jako základní blur filtr s tím rozdílem, že nebere průměr všech pixelů ale jejich váhou danou Gausovým rozložením. 
-\begin{figure}[h!]
+\begin{figure}[H]
   \centering
     \includegraphics[width=0.8\linewidth]{obrazky/gaussianBlur.png}%
-    \caption{Gaussian Blur.}
+    \caption{Filtr Gaussian Blur.}
     \label{fig:gaussianBlur}
 \end{figure}
 
 \subsection{Vyhlazovací filtr Median Blur}
 
-Namísto průměru hodnot jako u základního Bluru bere medián těchto hodnot. Výhodou tohoto filtru je, že zachovává hrany. Proto se také hojně používá pokud následující operace se snímkem má být hranová detekce. 
+Namísto průměru hodnot jako u základního Bluru bere medián těchto hodnot. Výhodou tohoto filtru je, že zachovává ve snímku hrany. Proto se také hojně používá pokud následující operace se snímkem má být hranová detekce. 
 
-\begin{figure}[h!]
+\begin{figure}[H]
   \centering
     \includegraphics[width=0.8\linewidth]{obrazky/medianBlur.png}%
     \caption{Median Blur.}
@@ -64,31 +64,34 @@ Namísto průměru hodnot jako u základního Bluru bere medián těchto hodnot.
 
 \subsection{Vyhlazovací Bileteral filtr}
 
-Filtr je principielně podobný jako Gaussian Blur. Navíc vyhodnocuje zda sousední pixely v dané oblasti mají přibližně stejnou intenzitu. U těch které nemají lze předpokládat že se jedná o hranu a takovéto pixely jsou ignorovány. Filtr tak dobře zachovává ve snímku hrany. To vše ale na úkor výpočetní náročnosti.
+Filtr je principielně podobný Gaussian Bluru. Navíc vyhodnocuje, zda sousední pixely v dané oblasti mají přibližně stejnou intenzitu. U těch které nemají lze předpokládat, že se jedná o hranu a takovéto pixely jsou ignorovány. Filtr tak zachovává hrany v původní podobě, kdežto zbytek snímku je vyhlazen. To vše ale na úkor výpočetní náročnosti.
 
-\begin{figure}[h!]
+\begin{figure}[H]
   \centering
     \includegraphics[width=0.8\linewidth]{obrazky/billateralFilter.png}%
-    \caption{Billateral filter.}
+    \caption{Billateral filtr.}
     \label{fig:billateralfilter}
 \end{figure}
 
-U všech čtyř vyhlazovacích algoritmů došlo po jejich použití k výraznému zpřesnění výsledku vyhledávacího algoritmu. Jak je z předchozích snímků patrné, nejhůře dopadl základní vyhlazovací filtr Blur. Zbývající algoritmy vykazovaly téměř shodných výsledků. Výsledná volba filtru který byl použit v řídícím SW padla na Median Blur. A to jedna z důvodu nižší výpočetní náročnosti oproti bilateral filtru a také že oproti Gaussian blur zachovává lépe hrany. Základní blur filtr nebyl pro svou chybovost ani uvažován.
+\bigskip
+U všech čtyř vyhlazovacích algoritmů došlo po jejich aplikování k výraznému zpřesnění výsledku vyhledávacího algoritmu. Jak je z předchozích snímků patrné, nejhůře dopadl základní vyhlazovací filtr Blur. Zbývající algoritmy vykazovaly téměř shodných výsledků. Výsledná volba filtru který byl použit v řídícím SW padla na Median Blur. A to jednak z důvodu nižší výpočetní náročnosti oproti bilateral filtru a také že oproti Gaussian blur zachovává lépe hrany. Základní blur filtr nebyl pro svou chybovost ani uvažován.
 
 
 \section{Centrovací značky a jejich detekce.}
 
-Naváděcí značky detailně popisuje IPC standard 73 51 konkrétně sekce 3.4.4. Naváděcí značky lze popsat jako geometrické obrazce sloužící k sesouhlasení souřadnicového systému při jednotlivých výrobních operacích.
+Naváděcí značky detailně popisuje IPC standard 7351 \cite{ipcFiduc} konkrétně sekce 3.4.4. Naváděcí značky lze popsat jako geometrické obrazce sloužící k sesouhlasení souřadnicového systému při jednotlivých výrobních operacích.
 Rozlišují se tři základní druhy značek a to panelové, globál a lokální. Panelové slouží jako reference v případě že panel obsahuje více jednotlivých motivů DPS. Globální pak slouží k lokalizaci jednotlivých komponent na DPS. Poslední kategorií jsou lokální naváděcí značky pro přesné zaměření jednotlivých komponent, zpravidla integrovaných obvodů.
+
 Pro zaměření X a Y pozie DPS a její rotace stačí dvě naváděcí značky. Pro korekci nelineárního zkreslení je zapotřebí minimálně třech značek. Se třemi značkami je tak možné korigovat i chyby v měřítku. Značky by měly být umístěny co nejdál od sebe a tvořit pomyslný trojůhelník. 
-Obrázek jednotlivých centrovacích značek.
 
-Optimální vzhled centrovací značky by dle standardu by měla mít formu kruhu  o průměru 1mm tvořeného mědí. Připouští se povrchová úprava a to ideálně OSP. Okolo kruhové oblasti tvořené mědí s poloměrem r je další kruhová plocha o poloměru 2*r a to bez mědi a nepájivé masky viz následující obrázek:
+%Obrázek jednotlivých centrovacích značek.
 
-\begin{figure}[h!]
+Optimální vzhled centrovací značky by dle standardu by měla mít formu kruhu  o průměru 1mm tvořeného mědí. Připouští se povrchová úprava a to ideálně OSP. Okolo kruhové oblasti tvořené mědí s poloměrem \textbf{r} je další kruhová plocha o poloměru \textbf{2*r} a to bez mědi a nepájivé masky viz následující obrázek:
+
+\begin{figure}[H]
   \centering
-    \includegraphics[width=0.4\linewidth]{obrazky/fiducial.png}%
-    \caption{obrázek centrovacích značek + naznačení poloměrů.}
+    \includegraphics[width=0.4\linewidth]{pdf/fiducial2.pdf}%
+    \caption{Centrovací značka s naznačením poloměrů.}
     \label{fig:fiducial}
 \end{figure}
 
@@ -96,26 +99,26 @@ Optimální vzhled centrovací značky by dle standardu by měla mít formu kruh
 
 V případě vícevrstvých DPS je vyžadováno pod všemi centrovacími značkami stejné pozadí. Tzn se nedoporučuje vést ve vrstvě přímo pod centrovacími značkami vodivé cesty.
 
-K detekci centovacích značek je použit obraz z horní kamery. Vyhledat přesnou pozici centrovací značky lze pomocí vyhodnocování obrazu a to dvěma způsoby. Buď za pomocí referenční šablony a nebo pomocí detekce určitých rysů v obraze- zde kruhů.
-Metoda s použitím naučené šablony dosahuhje přesnějších výsledků, avšak není příliš univerzální. Při změně velikosti centrovací značky a nebo při změně barvy nepájivé masky se její přesnost snižuje. 
-Oproti tomu použití detekce rysů v obraze si dokáže spolehlivě poradit i s různou velikostí centrovacích značek. V našem případě se hledají kruhy a to za pomocí Houghovy transformace. Právě tato univerzální metoda byla použita do řídícího systému.
+K detekci centovacích značek je použit obraz z horní kamery. Vyhledat přesnou pozici centrovací značky lze pomocí vyhodnocování obrazu a to dvěma způsoby. Buď za pomocí referenční šablony a nebo pomocí detekce určitých rysů v obraze - zde kruhů.
+Metoda s použitím naučené šablony dosahuhje přesnějších výsledků, avšak není příliš univerzální. Při změně velikosti centrovací značky a nebo při změně barvy nepájivé masky se její přesnost snižuje. Pro každou DPS je tak zapotřebí vytvořit novou vlastní šablonu.
+Oproti tomu použití detekce rysů v obraze si dokáže spolehlivě poradit i s různou velikostí centrovacích značek bez ohledu na barvu či povrchovou úpravu. V našem případě se hledají kruhy a to za pomocí Houghovy transformace. Právě tato univerzální metoda byla použita do řídícího systému.
 
 
 \section{Houghova transformace a  hledání kruhů v obraze.}
 
 Pomocí metod z předocizích kapitol jsme schopni vstupní snímky vyhladit spolehlivě z nich odstranit šum. Právě takto upravené snímky ve formě 8-bitových černobílích obrázků jsou vstupním parametrem Houghovy transformace pro hledání kruhů.
 
-Houghova transformace je v OpenCV realizována funkcí HoughCircles(...). Výstupem je pak pole obsahující všechny nalezené kruhy uložené ve formě X, Y a rádius. Naším úkolem je v obrázku najít pouze jeden kruh, který odpovídá obrysu centrovací značky. Pro minimalizaci falešně pozitivních výsledků jsou všechny snímky z horní kamery automaticky ořezávány na velikost 85x85 pixelů. Tím se minimalizuje falešná detekce kupříkladu na prokovech DPS. I tak ale bylo zapotřebí naladit všechny parametry funkce HoughCircles pro spolehlivé výsledky. A to hlavně minRadisu, maxRadisu a minDist. Ze znalosti počtu pixelů na mm a průměru centrovací značky (1mm) byl vypočten rádius hledané centrovací značky v pixelech. Na základě toho byl pomocí parametru minRadisu a maxRadisu omezen rozsah velikostí hledaných kruhů, čímž se značně sníži počet falešných detekcí. Funkce ale vidí centrovací značku jako dva kruhy se společným středem. Proto byla parametrem minDist nastavena minimální vzdálenost mezi středy kruhů. Naladěním parametrů se podařilo dosáhnout, že funkce nachází pouze jeden středový kruh.
+Houghova transformace je v OpenCV realizována funkcí HoughCircles(...). Výstupem je pak pole obsahující všechny nalezené kruhy uložené ve formě X, Y a rádius. Naším úkolem je v obrázku najít pouze jeden kruh, který odpovídá obrysu centrovací značky. Pro minimalizaci falešně pozitivních výsledků jsou všechny snímky z horní kamery automaticky ořezávány na velikost 85x85 pixelů. Tím se minimalizuje falešná detekce kupříkladu na prokovech DPS. I tak ale bylo zapotřebí naladit všechny vstupní parametry funkce HoughCircles pro spolehlivé výsledky. A to hlavně minRadisu, maxRadisu a minDist. Ze znalosti počtu pixelů na mm a průměru centrovací značky (1mm) byl vypočten rádius hledané centrovací značky v pixelech. Na základě toho byl pomocí parametru minRadisu a maxRadisu omezen rozsah velikostí hledaných kruhů, čímž se značně sníži počet falešných detekcí. Funkce ale vidí centrovací značku jako dva soustředné kruhy. Proto byla parametrem minDist nastavena minimální vzdálenost mezi středy kruhů. Naladěním parametrů se tak podařilo dosáhnout, že funkce nachází pouze jeden středový kruh.
 
 
 
 
 \subsection{Spolehlivost detekčního algoritmu}
-Pro ověření spolehlivosti byl naprogramován skript, který porovnával výsledky ze sto po sobě jdoucích snímků z kamery. Skript tak vytvořil snímek z horní kamery, aplikoval medianblur filtr, ořízl orázek na rozměr 85x85 pixelů a na něj spustil Houghovu transformaci. Výsledky z měření jsou v následujícím grafu kde 0 na ose X znamená, že algoritmus našel přesný střed centrovací značky. Jak je patrné, maximální ropztyl a tedy i chyba byl 2 pixely. Což v přepočtu na mm znamená XXX mm. 
+Pro ověření spolehlivosti byl naprogramován skript, který porovnával výsledky ze sto po sobě jdoucích snímků z kamery. Skript tak vytvořil snímek z horní kamery, aplikoval medianblur filtr, ořízl orázek na rozměr 85x85 pixelů a na něj spustil Houghovu transformaci. Výsledky z měření jsou v následujícím grafu kde 0 na ose X znamená, že algoritmus našel přesný střed centrovací značky. Jak je patrné, maximální ropztyl a tedy i chyba byl 2 pixely. Což v přepočtu na mm znamená 0,08mm. 
 
-\begin{figure}[h!]
+\begin{figure}[H]
   \centering
-    \includegraphics[width=0.9\linewidth]{obrazky/houghGraph.png}%
+    \includegraphics[width=0.9\linewidth]{pdf/hough-crop2.pdf}%
     \caption{Rozptyl výsledku z detektoru centrovacích značek.}
     \label{fig:billateralfilter}
 \end{figure}
@@ -130,18 +133,18 @@ Napsat komentář k přesnostem.
 Ukázka vlivu osvětlení na detekci: Pro redukci šumu byl použit median filtr
 
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\textwidth}
 		\centering
-		\includegraphics[width=0.4\linewidth, trim = 0cm -1.5cm 0cm 0cm]{obrazky/fiduc_denni_crop.png}%
+		\includegraphics[width=0.7\linewidth, trim = 0cm -0.2cm 0cm 0cm]{obrazky/fiduc_denni_crop.png}%
 		\caption{AAAA.}
 		\label{fig:denni}
 	\end{subfigure}
 	~
 	\begin{subfigure}[b]{0.4\textwidth}
 		\centering
-		\includegraphics[width=0.9\linewidth]{obrazky/fiduc_denni_crop3.png}%
+		\includegraphics[width=0.8\linewidth]{obrazky/fiduc_denni_crop3.png}%
 		\caption{BBBB.}
 		\label{fig:denni2}
 	\end{subfigure}
@@ -150,18 +153,18 @@ Ukázka vlivu osvětlení na detekci: Pro redukci šumu byl použit median filtr
 \end{figure}
 
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\textwidth}
 		\centering
-		\includegraphics[width=0.4\linewidth, trim = 0cm -1.5cm 0cm 0cm]{obrazky/fiduc_tma_prisviceno_crop.png}%
+		\includegraphics[width=0.7\linewidth, trim = 0cm -0.2cm 0cm 0cm]{obrazky/fiduc_tma_prisviceno_crop.png}%
 		\caption{AAAA.}
 		\label{fig:tma}
 	\end{subfigure}
 	~
 	\begin{subfigure}[b]{0.4\textwidth}
 		\centering
-		\includegraphics[width=0.9\linewidth]{obrazky/fiduc_tma_prisviceno_crop3.png}%
+		\includegraphics[width=0.8\linewidth]{obrazky/fiduc_tma_prisviceno_crop3.png}%
 		\caption{BBBB.}
 		\label{fig:tma2}
 	\end{subfigure}
@@ -169,18 +172,18 @@ Ukázka vlivu osvětlení na detekci: Pro redukci šumu byl použit median filtr
 	\caption{Tma, prisviceno XXX.}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\textwidth}
 		\centering
-		\includegraphics[width=0.4\linewidth, trim = 0cm -1.5cm 0cm 0cm]{obrazky/fiduc_svetlo_prisviceno_crop.png}%
+		\includegraphics[width=0.7\linewidth, trim = 0cm -0.2cm 0cm 0cm]{obrazky/fiduc_svetlo_prisviceno_crop.png}%
 		\caption{AAAA.}
 		\label{fig:svetlo}
 	\end{subfigure}
 	~
 	\begin{subfigure}[b]{0.4\textwidth}
 		\centering
-		\includegraphics[width=0.9\linewidth]{obrazky/fiduc_svetlo_prisviceno_crop3.png}%
+		\includegraphics[width=0.8\linewidth]{obrazky/fiduc_svetlo_prisviceno_crop3.png}%
 		\caption{BBBB.}
 		\label{fig:svetlo2}
 	\end{subfigure}
@@ -189,18 +192,18 @@ Ukázka vlivu osvětlení na detekci: Pro redukci šumu byl použit median filtr
 \end{figure}
 
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.4\textwidth}
 		\centering
-		\includegraphics[width=0.4\linewidth, trim = 0cm -1.5cm 0cm 0cm]{obrazky/fiduc_svetlostrop_crop.png}%
+		\includegraphics[width=0.7\linewidth, trim = 0cm -0.2cm 0cm 0cm]{obrazky/fiduc_svetlostrop_crop.png}%
 		\caption{AAAA.}
 		\label{fig:strop}
 	\end{subfigure}
 	~
 	\begin{subfigure}[b]{0.4\textwidth}
 		\centering
-		\includegraphics[width=0.9\linewidth]{obrazky/fiduc_svetlostrop_crop3.png}%
+		\includegraphics[width=0.8\linewidth]{obrazky/fiduc_svetlostrop_crop3.png}%
 		\caption{BBBB.}
 		\label{fig:strop2}
 	\end{subfigure}

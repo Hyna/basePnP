@@ -1,9 +1,10 @@
-\chapter{Konstrukce}
+\chapter{Mechanická konstrukce}
 
-Základ mechanické konstukce tvoří extrudované hliníkové profily 30x30mm od firmy Missumi, konkrétně typ GFS6-3030. Profil má drážky které za pomocí zásuvných matek umožňují snadné přichycení dalšího příslušenství k profilu. Stejně tak spojování profilů je díky drážkám velice jednoduché. Vzhledem k tomu, že v celé konstrukci je zapotřebí velké množství spojů, vycházelo by použití originálních spojek draho. V nášledujiící tabulce je seznam riginálních dílů Misumi potřebných pro jeden spoj a  jejich cena.
+Základ mechanické konstukce tvoří extrudované hliníkové profily 30x30mm od firmy Missumi, konkrétně typ GFS6-3030. Profil má drážky které za pomocí zásuvných matek umožňují snadné přichycení dalšího příslušenství k profilu. Stejně tak spojování profilů je díky drážkám velice jednoduché. Vzhledem k tomu, že v celé konstrukci je zapotřebí velké množství spojů, vycházelo by použití originálních spojek Misumu draho. V tabulce \ref{table:ceny} je uveden seznam riginálních dílů Misumi potřebných pro jeden spoj a  jejich cena.
 
 \begin{table}[h!]
   \caption{Cena originálních dílů Misumi potřebných na jeden spoj (v Kč a včetně DPH). }
+  \label{table:ceny}
   \begin{center}
   	\small
 	  \begin{tabular}{|c|c|c|c|}
@@ -21,84 +22,97 @@ Základ mechanické konstukce tvoří extrudované hliníkové profily 30x30mm o
 \end{table}
 
 
-Jen spojky k sestavení rámu by tak přišly na přibližně 2000Kč. Proto byla zvolena úspornější varianta za použití 3D tisku FDM technologií. Díl HNTP6-6 byl nahrazen M6 matkou vsazenou do vytištěného dílu a rohová spojka HBLTS6 byla nahrazena celá tištěným dílem. Bez započtení energií a amortizace stroje vyšla cena plastových dílů na jeden spoj pod 5 Kč, což je výrazná úspora oproti 69Kč v originálních dílech.
+Originální spojky k sestavení rámu by tak přišly na přibližně 2000Kč. Proto byla zvolena úspornější varianta za použití 3D tisku FDM technologií. Díl HNTP6-6 byl nahrazen M6 matkou vsazenou do vytištěného dílu a rohová spojka HBLTS6 byla nahrazena celá tištěným dílem. Bez započtení energií a amortizace stroje vyšla cena plastových dílů na jeden spoj pod 5 Kč, což je výrazná úspora oproti 69Kč v originálních dílech.
 
-Dle zadání má automat být schopen osazovat DPS o velikosti 150x250mm. Při návrhu velikosti pracovní plochy bylo také nutné počítat s prostorem pro zásobníky součástek a kameru. Jelikož bylo použito lineárního vedení s typyzovanou délkou po 10cm, zvolil jsem délku vedení pro osu X 60cm a pro osu Y 40cm. Při započtení rozměrů samotné osazovací hlavy tak šlo počítat s reálnou pracovní plochou přibližně 300x500 mm. Pro samotnou desku 150x250 mm a požadovaných 20 zásobnících na součástky je to dostatečně velký prostor.
+Dle zadání má automat být schopen osazovat DPS o velikosti 150x250mm. Při návrhu velikosti pracovní plochy bylo také nutné počítat s prostorem pro zásobníky součástek a kameru. Jelikož bylo použito lineárního vedení s typyzovanou délkou po 10cm, zvolil jsem délku vedení pro osu X 60cm a pro osu Y 40cm. Při započtení rozměrů samotné osazovací hlavy tak šlo počítat s reálnou pracovní plochou přibližně 300x500 mm. Pro samotnou desku 150x250 mm a požadovaných 20 zásobnících na součástky je to dostatečně velký prostor i s rezervou pro další zásobníky.
+Celkový 3D model osazovacího automatu je dostupný v příloze \ref{priloha:C}.
 
 
 
 \section{Řešení pojezdů pro osy X a Y}
 
-Konstrukci pojezdů pro osy X a Y lze realizovat z běžně dostupných součástí třemi různými způsoby. Nejlevnější variantou je použití speciálně tvarovaných hliníkových profilů/kolejnic, po kterých budou jezdit ložiska nebo plastová kolečka. Použití ložisek v kombinaci s hliníkovou kolejnící není kvůli nízké tvrdosti hliníku příliš vhodné, časem pak dochází k vyježdění drázky v profilu. Proto se namísto ložiesk používají spíše tvrdé plasty jako je POM (Paraformaldehyd) konkrétně ve své variantě pod obchodním názvem Delrin. 
+Konstrukci pojezdů pro osy X a Y lze realizovat z běžně dostupných součástí třemi různými způsoby. Nejlevnější variantou je použití speciálně tvarovaných hliníkových profilů/kolejnic, po kterých jezdí ložiska nebo plastová kolečka. Použití ložisek v kombinaci s hliníkovou kolejnící není kvůli nízké tvrdosti hliníku příliš vhodné, časem pak dochází k vyježdění drázky v profilu. Proto se namísto ložisek používají spíše tvrdé plasty jako je POM (Paraformaldehyd) konkrétně ve své variantě pod obchodním názvem Delrin \cite{makerslide}. 
 
-Ukázka hliníkového profilu MakerSlide s Delrinovými kolečky.
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=0.5\linewidth]{obrazky/makerslide.jpg}%
+    \caption{Ukázka hliníkového profilu MakerSlide s Delrinovými kolečky \cite{makerslide}.}
+    \label{fig:delrin}
+\end{figure}
+
 
 Delrinová kolečka jsou tvarována do tvaru písmene V stejně jako hliníková kolejnice. Tento systém zamezuje nežádoucímu pohybu osy ve směru kolmém na směr pohybu po kolejnici.
 
-\section{Systém vodících tyčí}
+\subsection{Systém vodících tyčí}
 
-Pojezd tvoří lineární ložiska jezdící po hlazené tyči. Hlazená tyč je buď uložená jen na koncích a ložisko ji celou obepíná, nebo je tyč po celé délce podepřená a lineární ložisko je s výřezem. Rozdíl mezi těmito variantamy je z hlediska maximální zatížitelnosti vedení. V našem případě by tak stačila varianta uložení  na koncích, váha celého pojezdu i s vakuovou pinzetou byla odhadována pod 1kg.
+Pojezd tvoří lineární ložiska jezdící po hlazené tyči. Hlazená tyč je buď uložená jen na koncích a ložisko ji celou obepíná, nebo je tyč po celé délce podepřená a lineární ložisko je s výřezem. Rozdíl mezi těmito variantamy je z hlediska maximální zatížitelnosti vedení. V našem případě by tak stačila varianta uložení  na koncích, váha celého pojezdu i s vakuovou pipetou byla odhadována pod 1kg.
 
-\section{Lineární vedení.}
-Poslední zvažovanou a zároveň nejdražší možnosí bylo použití lineárního vedení. Tato varianta slibovala dosažení největších přesností. Dle zadání práce má být osazovací automat chopen osazovat součástky o velikosti 0805 pro které by bylo odatačující použití i první zmiňované varianty s Delrinovými kolečky. Osobním cílem ale bylo realizovat co nejpřesnější stroj který by byl schopen  osazovat i součástky o velikostech 0402. Proto bylo i přes svou vysokou cenu zvoleno právě toto řešení.
+\subsection{Lineární vedení}
+Poslední zvažovanou a zároveň nejdražší možnosí bylo použití lineárního vedení. Tato varianta slibovala dosažení největších přesností. Dle zadání práce má být osazovací automat chopen osazovat součástky o velikosti 0805 pro které by bylo dostačující použití i první zmiňované varianty s Delrinovými kolečky. Osobním cílem ale bylo realizovat co nejpřesnější stroj, který by byl schopen  osazovat i součástky o velikostech 0402. Proto bylo i přes svou vysokou cenu zvoleno právě toto řešení.
 
 \section{Pohon os}
 Pokud se omezíme na základní principy přenosu rotačního pohybu motoru na lineární pohyb, zůstávají dvě varianty jak osy pohánět. A to za pomocí řemenů a nebo šroubovicového systému.
-Šroubovicový systém pracuje na podobném principu jako matka (pohyblivá část) našroubovaná na závitové tyči (šroubovice). Rozdílem je ale větší stoupání a jiný profil závitu minimalizující tření, což zvyšuje účinnost převodu. Takovým příkladem je trapézová štoubovice. Mnohem přesnější variantou je pak kuličková šroubovice. Místo závitu jsou v matce kuličky, které v ní recilkurují. Účinnos převodu je tak ješte vyšší než u trapézového šroubu. Při změně směru otáčení mají ale obě varianty tzv mrtvý chod. Tuto hysterezi je možné eliminovat použitím předepnutých matek matic.
+Šroubovicový systém pracuje na podobném principu jako matka (pohyblivá část) našroubovaná na závitové tyči (šroubovice). Rozdílem je ale větší stoupání a jiný profil závitu minimalizující tření, což zvyšuje účinnost převodu. Takovým příkladem je trapézová štoubovice. Přesnější variantou je pak kuličková šroubovice. Místo závitu jsou v matce kuličky, které v ní recirkulují. Účinnos převodu je tak ješte vyšší než u trapézového šroubu. Při změně směru otáčení mají ale obě varianty tzv mrtvý chod. Tuto hysterezi je možné eliminovat použitím předepnutých matic.
 Spojení šroubovice s motorem musí být přes pružnou spojku, aby se eliminovala chyba souososti.
 
-%Využití řemenů 
-Řešení s řemeny je koncipováno tak, že přímo na hřídel motoru je přidělána řemenice. Druhá řemenice (nebo ložisko) je umístěna na opačném konci osy a mezi nimi je natažen uzavřený řemen.
-Při správné volbě profilu řemenu je mrtvý chod zanedbatelný. Při velké délce řemenů může při jejich zatížení docházet k negativnímu propínání řemenů. Proto jsou řemeny vyztužovány tkaninou, nebo ocelovými dráty.
+\subsection{Využití řemenů}%
+Řešení s řemeny je koncipováno tak, že přímo na hřídel motoru je přidělána řemenice. Druhá řemenice, nebo ložisko je umístěno na opačném konci osy a mezi nimi je natažena uzavřená smyčka řemene.
+Při správné volbě profilu řemenu je mrtvý chod zanedbatelný. Při velké délce řemenů může při jejich zatížení docházet k negativnímu propínání. Proto jsou řemeny vyztužovány tkaninou, nebo ocelovými dráty.
 
-Použití řemenů výrazně zjednodušuje a zlevňuje celou konstrukci, proto byly do konstrukce zvoleny řemeny. Konkrétně řemen s profilem GT2, který je určen právě do aplikací s lineárním pohybem. Tvar zubu je zakulacený pro potlačení mrtvého chodu viz následující obrázek.
+Použití řemenů výrazně zjednodušuje a zlevňuje celou konstrukci, proto byly do konstrukce zvoleny řemeny. Konkrétně řemen s profilem GT2, který je určen přímo do aplikací s lineárním pohybem. Tvar zubu je zakulacený pro potlačení mrtvého chodu viz následující obrázek.
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=0.5\linewidth]{obrazky/placeholder.png}%
+    \caption{Ukázka profilu řemenu GT2.}
+    \label{fig:GT2}
+\end{figure}
 
 
 \section{Uspořádání os X a Y}
 
-V předchozích kapitolách byly na základě úvah o přesnosti zařízení zvoleny pojezdy tvořené lineárním vedením poháněné řemeny. V této kapitole bude popsaná problematika uspořádání jednotlivých os.
+V předchozích kapitolách byly na základě úvah o přesnosti zařízení zvoleny pojezdy tvořené lineárním vedením a poháněné řemeny. V této kapitole bude popsaná problematika uspořádání jednotlivých os.
 
 Samotný polohovací systém osazovacího automatu pracuje v kartézském souřadnicovém systému.  Z konstrukčního hlediska bylo několik možností jak systém řešit. Základní konstrukční princip je, že každá osa má svůj vlastní motor (nebo více motorů), který ji pohání. Portálová konstrukce našeho osazovacího automatu by tak mohla vypadat dle následujícího obrázku.
 
-\begin{figure}[h!]
+\begin{figure}[H]
   \centering
-    \includegraphics[width=0.6\linewidth]{obrazky/XY.png}%
-    \caption{XY.}
+    \includegraphics[width=0.6\linewidth]{pdf/XY2.pdf}%
+    \caption{Uspořádání os XY.}
     \label{fig:XY}
 \end{figure}
 
 
-V případě použití jednoho motoru pro osu Y by bylo nutné spřažení pravé a levé části portálu, aby nedocházelo k nežádoucí rotaci při hnaní jen jedné části portálu. Alternativou by bylo na každou stranu portálu dát jeden motor a jejich otáčky řídit synchroně. 
-Osa X by měla po boku vlastní motor a celá by byla uložená na ose Y. Tzn s pohybem v ose Y by se pohybovala i celá váha osy X. Na ose X je navíc ještě umístěna osa Z s vakuovou pipetou což je další hmota navíc. Dá se očekávat, že dynamické vlastnosti, rychlost a kompaktnost tohoto řešení nebude pro osazovací automat ideální (za předpokladu použití dostupných komponent).
+V případě použití jednoho motoru pro osu Y by bylo nutné spřažení pravé a levé části portálu, aby nedocházelo k nežádoucí rotaci při hnaní jen jedné části portálu. Osa X by měla po straně vlastní motor a celá by byla uložená na ose Y. Tzn s pohybem v ose Y by se pohybovala i celá váha osy X. Na ose X je navíc ještě umístěna osa Z s vakuovou pipetou, což je další hmota navíc. Dá se očekávat, že dynamické vlastnosti, rychlost a kompaktnost tohoto řešení nebudou pro osazovací automat ideální (za předpokladu použití dostupných komponent).
 
 
 
 
 
-\subsection{H-Bot}
-Zajímavým uspořádáním, které úplně eliminuje nutnost aby se motor X pohyboval s osou Y z předchozího uspořádání je systém H-bot. V tomto řešení jsou motory staticky připevněné k rámu a řemen je uspořádán do tvaru H, proto H-bot. Hmota motorů se tak již nepohybuje s pohybem os, tudíž celá sestava bude mít menší setrvačnost a lze tak dosáhnout rychlých akcelerací a vysokých rychlostí. Systém využívá dva motory, kde pro pohyb mechanismu jen v jedné ose je zapotřebí obou motorů. Pokud se motory točí stejným směrem, pohybují s jednou osou. Pro pohyb v druhé ose se točí v protifázi.
+\subsection{Systém H-Bot}
+Zajímavým uspořádáním, které úplně eliminuje nutnost aby se motor X pohyboval s osou Y z předchozího uspořádání je systém H-bot.
+ V tomto řešení jsou motory staticky připevněné k rámu a řemen je uspořádán do tvaru H, proto H-bot. Hmota motorů se tak již nepohybuje s pohybem os, tudíž celá sestava bude mít menší setrvačnost a lze tak dosáhnout rychlých akcelerací a vysokých rychlostí. Systém využívá dva motory, kde pro pohyb mechanismu jen v jedné ose je zapotřebí obou motorů. Pokud se motory točí stejným směrem, pohybují s jednou osou. Pro pohyb v druhé ose se točí v protifázi.
 
 
 
-\begin{figure}[h!]
+\begin{figure}[H]
   \centering
-    \includegraphics[width=0.6\linewidth]{obrazky/Hbot.png}%
-    \caption{H-bot.}
+    \includegraphics[width=0.6\linewidth]{pdf/Hbot2.pdf}%
+    \caption{Uspořádání os H-bot.}
     \label{fig:Hbot}
 \end{figure}
 
-Nevýhodou tohoto uspořádání je fakt, že síly působící na pohyblivý portál jsou v opačném směru což může vést k jeho mírné rotaci. Na obrázku je naznačen pohyb v pozitivním směru osy X, motor A i motor B se točí na stejnou stranu. Do obrázku byly naznačeny tahové a tlakové síly (zelená a modrá šipka), které by se měli v ideálním případě navzájem vyrušit. V reálném světě tomu tak není a portál má tendenci rotovat ve směru zelených šipek.
+Nevýhodou tohoto uspořádání je fakt, že síly působící na pohyblivý portál jsou v opačném směru což může vést k jeho mírné rotaci. Na obrázku je naznačen pohyb v pozitivním směru osy X, motor A i motor B se točí na stejnou stranu proti směru hodinových ručiček. Do obrázku byly naznačeny tahové a tlakové síly (zelená a modrá šipka), které by se měli v ideálním případě navzájem vyrušit. V reálném světě tomu tak není a portál má tendenci rotovat ve směru zelených šipek.
  S tímto systémem se tak dá dosahovat precizního polohování jen za předpokladu použití dostatečně tuhé konstrukce.
 
 
 
 
-\subsection{CoreXY}
+\subsection{Systém CoreXY}
 Výše zmíněné nevýhoda systému H-bot jde eliminovat podobným, avšak mírně komplikovanějším uspořádáním zvaným coreXY. 
 
-\begin{figure}[h!]
+\begin{figure}[H]
   \centering
-    \includegraphics[width=0.6\linewidth]{obrazky/coreXY.png}%
+    \includegraphics[width=0.6\linewidth]{pdf/coreXY2.pdf}%
     \caption{Core XY.}
     \label{fig:coreXY}
 \end{figure}
@@ -109,18 +123,19 @@ Jak je vidět z obrázku, síly působící na portál působí oproti H bot ji�
 \section{Zásobníky na součástky}
 Jedním z požadavků zadání práce je možnost odebírání součástek z dvaceti 8mm zásobníků. Kde každý zásobník musí obsahovat minimálně 20 součástek o velikosti 0805. Při návrhu designu zásobníků byl kladen důraz na univerzálnost, tedy nejen možnost zavedení 8mm pásky, ale i jiných rozměrů.
 
-Návrh tak vychází z tabulky XXX, kde je uvedena specifikace rozměrů pro jednotlivé šířky pásek od výrobce OnSemiconductors. Kde parametr K udává maximální výšku součástky. Aby byl zásobník univerzální, musí být schopný pojmout pásku o šířce 8-24 mm s minimální výškou 11,9mm.
+Návrh tak vychází z tabulky \ref{table:pasky}, kde je uvedena specifikace rozměrů pro jednotlivé šířky pásek od výrobce ON Semiconductor. Kde parametr K udává maximální výšku součástky. Aby byl zásobník univerzální, musí být schopný pojmout pásku o šířce 8-24 mm s minimální výškou 11,9mm.
 
 \begin{figure}[h!]
   \centering
     \includegraphics[width=0.8\linewidth]{obrazky/tape.png}%
-    \caption{Páska.}
+    \caption{Páska s naznačenými kótami.}
     \label{fig:tape2}
 \end{figure}
 
 
 \begin{table}[h!]
-  \caption{Rozměry pásek}
+  \caption{Typizované rozměry pásek \cite{onsemi}.}
+  \label{table:pasky}
   \begin{center}
   	\small
 	  \begin{tabular}{|c|c|c|c|c|c|c|c|}
@@ -139,14 +154,14 @@ Návrh tak vychází z tabulky XXX, kde je uvedena specifikace rozměrů pro jed
   \end{center}
 \end{table}
 
-Byl proto navržen modulový systém zásobníku, který má variabilní šířku a na výšku je schopen pojmout 12mm vysoké součástky. Schématické znázornění zásobníku je na následujícím obrázku. Jednotlivé moduly zásobníku byly vytištěny z plastu za pomocí 3D tiskárny. Z obavy z možných problémů s ESD byl pro jistotu použit ABS materiál s přídavkem uhlíku, který omezuje statický náboj.
+Byl proto navržen modulový systém zásobníku, který má variabilní šířku a na výšku je schopen pojmout 12mm vysoké součástky. Schématické znázornění zásobníku je na obrázku \ref{fig:tape2}. Jednotlivé moduly zásobníku byly vytištěny z plastu za pomocí 3D tiskárny. Z obavy z možných problémů s ESD byl pro jistotu použit ABS materiál s přídavkem uhlíku, který omezuje statický náboj.
 
-Předpokladem je používání jen ústřižků pásek se součástkami. U frekventovaně používaných součástek jako jsou odpory 10k, kondenzátory 100nF a dalších by byla neustálá příprava ústřižků pasky zbytečně zdlouhavá. Proto byla přidána možnost založení celé role ke každému zásobníku.  
+Předpokladem je používání jen ústřižků pásek se součástkami. U frekventovaně používaných součástek jako jsou odpory 10k, kondenzátory 100nF a další by byla neustálá příprava ústřižků pasky zbytečně zdlouhavá. Proto byla přidána možnost založení celé role ke každému zásobníku viz obr. \ref{fig:role}.  
 
 \begin{figure}[h!]
   \centering
     \includegraphics{obrazky/zasobnik.png}%
-    \caption{Zásobník.}
+    \caption{Profil zásobníků.}
     \label{fig:zasobnik}
 \end{figure}
 
@@ -156,14 +171,14 @@ Výsledné provedení
 \begin{figure}[h!]
   \centering
     \includegraphics[width=0.85\linewidth]{obrazky/zasobniky2.jpg}%
-    \caption{Zásobník.}
+    \caption{Zásobníky se zavedenými paskami o různých šířkách.}
     \label{fig:zasobniky}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
     \includegraphics[width=0.85\linewidth]{obrazky/role.jpg}%
-    \caption{Zásobník.}
+    \caption{Držák na role.}
     \label{fig:role}
 \end{figure}
 
